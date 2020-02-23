@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HotelReservationsManager.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservationsManager.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class DbContext : IdentityDbContext<User, IdentityRole, string>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public DbContext(DbContextOptions<DbContext> options)
             : base(options)
         {
         }
