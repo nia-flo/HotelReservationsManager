@@ -12,6 +12,7 @@ using HotelReservationsManager.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HotelReservationsManager.Data.Models;
 
 namespace HotelReservationsManager
 {
@@ -28,10 +29,18 @@ namespace HotelReservationsManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Data.DbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<Data.DbContext>();
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 0;
+            }).AddEntityFrameworkStores<Data.DbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
