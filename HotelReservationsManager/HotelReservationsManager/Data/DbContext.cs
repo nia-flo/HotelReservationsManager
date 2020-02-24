@@ -11,6 +11,7 @@ namespace HotelReservationsManager.Data
     public class DbContext : IdentityDbContext<User, IdentityRole, string>
     {
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
 
         public DbContext(DbContextOptions<DbContext> options)
             : base(options)
