@@ -21,22 +21,22 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
+        //private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
+        //private readonly ILogger<RegisterModel> _logger;
         private readonly DbContext _context;
         //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger,
+            //SignInManager<User> signInManager,
+            //ILogger<RegisterModel> logger,
             DbContext context)
            // IEmailSender emailSender)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            //_signInManager = signInManager;
+            //_logger = logger;
             _context = context;
             //_emailSender = emailSender;
         }
@@ -103,17 +103,15 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { 
+                var user = new User {
                     Id = Guid.NewGuid().ToString(),
                     UserName = Input.Username,
                     FirstName = Input.FirstName,
@@ -121,26 +119,28 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     EGN = Input.EGN,
                     PhoneNumber = Input.PhoneNumber,
-                    Email = Input.Email 
+                    Email = Input.Email,
+                    HireDate = DateTime.Now,
+                    IsActive = true
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    //_logger.LogInformation("User created a new account with password.");
 
-                    if (_context.Users.Count() == 1)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Admin");
-                    }
-                    else
-                    {
+                    //if (_context.Users.Count() == 1)
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, "Admin");
+                    //}
+                    //else
+                    //{
                         await _userManager.AddToRoleAsync(user, "Employee");
-                    }
+                    //}
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Redirect("~/User/Employees");
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
