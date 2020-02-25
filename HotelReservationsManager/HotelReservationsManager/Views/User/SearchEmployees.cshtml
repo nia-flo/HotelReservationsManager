@@ -5,13 +5,10 @@
     ViewData["Title"] = "Search employees";
 }
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://unpkg.com/@@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    </head>
+<head>
+    <script src="https://unpkg.com/@@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 
 <h1 class="text-center">Employees</h1>
 <hr class="style1 bg-warning mb-2" />
@@ -21,19 +18,18 @@
     <div class="col-md-4">
         <form asp-action="SearchEmployees" asp-controller="User" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @*<label asp-for="SearchBy" class="control-label">Username</label>*@
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-            </div>
-            <select class="custom-select" asp-for="SearchBy">
-                <option selected disable>--- Select Search Criteria</option>
+            <select class="custom-select mb-3" asp-for="SearchBy">
                 <option value="Username">Username</option>
                 <option value="FirstName">FirstName</option>
                 <option value="MiddleName">MiddleName</option>
                 <option value="LastName">LastName</option>
                 <option value="Email">Email</option>
             </select>
+            <div class="form-group">
+                @*<label asp-for="Value" class="control-label">Username</label>*@
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
             <div class="form-group col-md2">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
@@ -44,35 +40,53 @@
 <div class="justify-content-between">
     @foreach (var employee in Model.Users)
     {
-        <div class="d-flex row my-3 mx-2 bg-light">
-            <div class="col-md-10">
-                <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
+        @if (employee.IsActive)
+        {
+            <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
+                <div class="col-md-10">
+                    <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
 
-                <a class="text-muted">
-                    <b>username:</b> @employee.UserName
-                    <b>email:</b> @employee.Email
-                    <b>EGN:</b> @employee.EGN
-                    <b>hire date:</b> @employee.HireDate
-                    @if (!employee.IsActive)
-                    {
-                        <b>dismiss date:</b> @employee.DismissDate
-                    }
-                </a>
+                    <a class="text-muted">
+                        <b>username:</b> @employee.UserName
+                        <b>email:</b> @employee.Email
+                        <b>EGN:</b> @employee.EGN
+                        <b>hire date:</b> @employee.HireDate
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
+                </div>
             </div>
+        }
+        else
+        {
+            <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
+                <div class="col-md-10">
+                    <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
 
-            @if (employee.IsActive)
-            {
-                <div class="col-md-1">
-                    <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+                    <a class="text-muted">
+                        <b>username:</b> @employee.UserName
+                        <b>email:</b> @employee.Email
+                        <b>EGN:</b> @employee.EGN
+                        <b>hire date:</b> @employee.HireDate
+                        <b>dismiss date:</b> @employee.DismissDate
+                    </a>
                 </div>
-            }
-            else
-            {
+
                 <div class="col-md-1">
-                    <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+                    <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
                 </div>
-            }
-        </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Hire</a>
+                </div>
+            </div>
+        }
     }
 </div>
 

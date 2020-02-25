@@ -44,75 +44,6 @@ namespace HotelReservationsManager.Controllers
             return View(employees);
         }
 
-        public IActionResult EmployeesByUsername(UsersByUsernameViewModel model)
-        {
-            model.Users =
-                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
-                                            context.Roles.First(r => r.Name == "Employee").Id)
-                             .Where(u => u.UserName == model.UserName)
-                             .ToList()
-                             .OrderBy(u => u.FirstName)
-                             .ThenBy(u => u.MiddleName)
-                             .ThenBy(u => u.LastName)
-                             .Select(u => new UserViewModel()
-                             {
-                                 Id = u.Id,
-                                 UserName = u.UserName,
-                                 Email = u.Email,
-                                 FirstName = u.FirstName,
-                                 MiddleName = u.MiddleName,
-                                 LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
-                             })
-                             .ToList();
-
-            return View(model);
-        }
-
-        public IActionResult EmployeesByFirstName(UsersByFirstNameViewModel model)
-        {
-            model.Users =
-                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
-                                            context.Roles.First(r => r.Name == "Employee").Id)
-                             .Where(u => u.FirstName == model.FirstName)
-                             .ToList()
-                             .OrderBy(u => u.FirstName)
-                             .ThenBy(u => u.MiddleName)
-                             .ThenBy(u => u.LastName)
-                             .Select(u => new UserViewModel()
-                             {
-                                 Id = u.Id,
-                                 UserName = u.UserName,
-                                 Email = u.Email,
-                                 FirstName = u.FirstName,
-                                 MiddleName = u.MiddleName,
-                                 LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
-                             })
-                             .ToList();
-
-            return View(model);
-        }
-
-        public IActionResult EmployeesByMiddleName(string middleName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IActionResult EmployeesByLAstName(string lastName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IActionResult EmployeesByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
         public IActionResult SearchEmployees(SearchEmployeesViewModel model)
         {
             if (model.SearchBy == "Username")
@@ -138,14 +69,13 @@ namespace HotelReservationsManager.Controllers
                                  DismissDate = u.DismissDate
                              })
                              .ToList();
-
-                return View(model);
             }
-
-            model.Users =
+            else if (model.SearchBy == "FirstName")
+            {
+                model.Users =
                 context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
                                             context.Roles.First(r => r.Name == "Employee").Id)
-                             .Where(u => u.UserName == model.Value)
+                             .Where(u => u.FirstName == model.Value)
                              .ToList()
                              .OrderBy(u => u.FirstName)
                              .ThenBy(u => u.MiddleName)
@@ -163,6 +93,83 @@ namespace HotelReservationsManager.Controllers
                                  DismissDate = u.DismissDate
                              })
                              .ToList();
+            }
+            else if (model.SearchBy == "MiddleName")
+            {
+                model.Users =
+                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
+                                            context.Roles.First(r => r.Name == "Employee").Id)
+                             .Where(u => u.MiddleName == model.Value)
+                             .ToList()
+                             .OrderBy(u => u.FirstName)
+                             .ThenBy(u => u.MiddleName)
+                             .ThenBy(u => u.LastName)
+                             .Select(u => new UserViewModel()
+                             {
+                                 Id = u.Id,
+                                 UserName = u.UserName,
+                                 Email = u.Email,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 HireDate = u.HireDate,
+                                 IsActive = u.IsActive,
+                                 DismissDate = u.DismissDate
+                             })
+                             .ToList();
+            }
+            else if (model.SearchBy == "LastName")
+            {
+                model.Users =
+                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
+                                            context.Roles.First(r => r.Name == "Employee").Id)
+                             .Where(u => u.LastName == model.Value)
+                             .ToList()
+                             .OrderBy(u => u.FirstName)
+                             .ThenBy(u => u.MiddleName)
+                             .ThenBy(u => u.LastName)
+                             .Select(u => new UserViewModel()
+                             {
+                                 Id = u.Id,
+                                 UserName = u.UserName,
+                                 Email = u.Email,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 HireDate = u.HireDate,
+                                 IsActive = u.IsActive,
+                                 DismissDate = u.DismissDate
+                             })
+                             .ToList();
+            }
+            else if(model.SearchBy == "Email")
+            {
+                model.Users =
+                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
+                                            context.Roles.First(r => r.Name == "Employee").Id)
+                             .Where(u => u.Email == model.Value)
+                             .ToList()
+                             .OrderBy(u => u.FirstName)
+                             .ThenBy(u => u.MiddleName)
+                             .ThenBy(u => u.LastName)
+                             .Select(u => new UserViewModel()
+                             {
+                                 Id = u.Id,
+                                 UserName = u.UserName,
+                                 Email = u.Email,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 HireDate = u.HireDate,
+                                 IsActive = u.IsActive,
+                                 DismissDate = u.DismissDate
+                             })
+                             .ToList();
+            }
+            else
+            {
+                model.Users = new List<UserViewModel>();
+            }
 
             return View(model);
         }
