@@ -156,7 +156,23 @@ namespace HotelReservationsManager.Controllers
             }
             else
             {
-                model.Users = new List<UserViewModel>();
+                model.Users = context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
+                                            context.Roles.First(r => r.Name == "Employee").Id)
+                             .ToList()
+                             .OrderBy(u => u.FirstName)
+                             .ThenBy(u => u.MiddleName)
+                             .ThenBy(u => u.LastName)
+                             .Select(u => new UserViewModel()
+                             {
+                                 Id = u.Id,
+                                 UserName = u.UserName,
+                                 Email = u.Email,
+                                 FirstName = u.FirstName,
+                                 MiddleName = u.MiddleName,
+                                 LastName = u.LastName,
+                                 IsActive = u.IsActive
+                             })
+                             .ToList();
             }
 
             return View(model);
@@ -231,6 +247,34 @@ namespace HotelReservationsManager.Controllers
 
             //return Redirect("~/User/UserDetails/" + model.Id);
             return Redirect("~/");
+        }
+
+        public IActionResult Hire(string id)
+        {
+            User user = context.Users.First(u => u.Id == id);
+
+            user.HireDate = DateTime.Now;
+            user.IsActive = true;
+
+            context.Update(user);
+            context.SaveChanges();
+
+            //return Redirect("~/User/UserDetails/" + model.Id);
+            return Redirect("~/User/Employees");
+        }
+
+        public IActionResult Dismiss(string id)
+        {
+            User user = context.Users.First(u => u.Id == id);
+
+            user.DismissDate = DateTime.Now;
+            user.IsActive = false;
+
+            context.Update(user);
+            context.SaveChanges();
+
+            //return Redirect("~/User/UserDetails/" + model.Id);
+            return Redirect("~/User/Employees");
         }
     }
 }
