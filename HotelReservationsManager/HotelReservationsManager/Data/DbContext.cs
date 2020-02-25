@@ -13,6 +13,8 @@ namespace HotelReservationsManager.Data
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
 
+        public virtual DbSet<Reservation> Reservations { get; set; }
+
         public DbContext(DbContextOptions<DbContext> options)
             : base(options)
         {
