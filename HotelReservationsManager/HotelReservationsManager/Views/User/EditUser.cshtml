@@ -1,0 +1,100 @@
+﻿@model HotelReservationsManager.Models.UserViewModels.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<h1>Edit user</h1>
+
+<hr />
+
+<div class="col-md-4">
+    <form asp-action="EditUser" asp-controller="User" method="post">
+        <div class="row mb-3">
+            <a class="text-muted">First name:</a>
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Middle name:</a>
+            <input asp-for="MiddleName" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Last name:</a>
+            <input asp-for="LastName" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">EGN:</a>
+            <input asp-for="EGN" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Username:</a>
+            <input asp-for="UserName" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Email:</a>
+            <input asp-for="Email" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Phone number:</a>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Hire date:</a>
+            <input type="date" asp-for="HireDate" class="form-control" />
+        </div>
+
+        @*@if (Model.IsActive)
+        {
+            <div class="row">
+                <a class="text-muted">This employee is active!</a>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <a class="text-muted">This employee is not active!</a>
+            </div>
+
+            <div class="row mb-3">
+                <a class="text-muted">Dismiss date:</a>
+                <input type="date" asp-for="DismissDate" class="form-control" disabled />
+            </div>
+        }
+
+        @if (Model.IsActive)
+        {
+            <div class="row justify-content-around">
+                <div class="col-md-1">
+                    <a asp-action="EditUser" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Dismiss" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row justify-content-around">
+                <div class="col-md-1">
+                    <a asp-action="EditUser" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Hire" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Hire</a>
+                </div>
+            </div>
+        }*@
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>

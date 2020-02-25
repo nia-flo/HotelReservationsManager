@@ -184,5 +184,53 @@ namespace HotelReservationsManager.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult EditUser(string id)
+        {
+            User user = context.Users.First(u => u.Id == id);
+
+            UserDetailsViewModel model = new UserDetailsViewModel()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                EGN = user.EGN,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                DismissDate = user.DismissDate,
+                HireDate = user.HireDate,
+                IsActive = user.IsActive
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditUser(UserDetailsViewModel model)
+        {
+            User user = context.Users.First(u => u.Id == model.Id);
+
+            user.Id = model.Id;
+            user.UserName = model.UserName;
+            user.FirstName = model.FirstName;
+            user.MiddleName = model.MiddleName;
+            user.LastName = model.LastName;
+            user.EGN = model.EGN;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            user.DismissDate = model.DismissDate;
+            user.HireDate = model.HireDate;
+            user.IsActive = model.IsActive;
+
+            context.Update(user);
+            context.SaveChanges();
+
+            //return Redirect("~/User/UserDetails/" + model.Id);
+            return Redirect("~/");
+        }
     }
 }
