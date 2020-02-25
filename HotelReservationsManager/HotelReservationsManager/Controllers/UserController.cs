@@ -35,9 +35,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
            
@@ -64,9 +62,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
             }
@@ -88,9 +84,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
             }
@@ -112,9 +106,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
             }
@@ -136,9 +128,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
             }
@@ -160,9 +150,7 @@ namespace HotelReservationsManager.Controllers
                                  FirstName = u.FirstName,
                                  MiddleName = u.MiddleName,
                                  LastName = u.LastName,
-                                 HireDate = u.HireDate,
-                                 IsActive = u.IsActive,
-                                 DismissDate = u.DismissDate
+                                 IsActive = u.IsActive
                              })
                              .ToList();
             }
@@ -170,6 +158,29 @@ namespace HotelReservationsManager.Controllers
             {
                 model.Users = new List<UserViewModel>();
             }
+
+            return View(model);
+        }
+
+        public IActionResult UserDetails(string id)
+        {
+            User user = context.Users.First(u => u.Id == id);
+
+            UserDetailsViewModel model = new UserDetailsViewModel()
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                EGN = user.EGN,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                DismissDate = user.DismissDate,
+                HireDate = user.HireDate,
+                IsActive = user.IsActive
+            };
+
 
             return View(model);
         }

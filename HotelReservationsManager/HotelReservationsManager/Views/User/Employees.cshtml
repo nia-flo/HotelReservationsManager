@@ -11,37 +11,51 @@
 <div class="justify-content-between">
     @foreach (var employee in Model)
     {
-    <div class="d-flex row my-3 mx-2 bg-light">
-        <div class="col-md-10">
-            <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
-
-            <a class="text-muted">
-                <b>username:</b> @employee.UserName
-                <b>email:</b> @employee.Email
-                <b>EGN:</b> @employee.EGN
-                <b>hire date:</b> @employee.HireDate
-                @if (!employee.IsActive)
-                {
-                    <b>dismiss date:</b> @employee.DismissDate
-                }
-            </a>
-        </div>
-
         @if (employee.IsActive)
         {
-            <div class="col-md-1">
-                <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+            <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
+                <div class="col-md-10">
+                    <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
+
+                    <a class="text-muted">
+                        <b>username:</b> @employee.UserName
+                        &emsp
+                        <b>email:</b> @employee.Email
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="UserDetails" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
+                </div>
             </div>
         }
         else
         {
-            <div class="col-md-1">
-                <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+            <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
+                <div class="col-md-10">
+                    <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
+
+                    <a class="text-muted">
+                        <b>username:</b> @employee.UserName
+                        &emsp
+                        <b>email:</b> @employee.Email
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="UserDetails" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Hire</a>
+                </div>
             </div>
         }
-    </div>
     }
 </div>
-
 
 

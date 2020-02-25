@@ -1,0 +1,69 @@
+﻿@model HotelReservationsManager.Models.UserViewModels.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "User details";
+}
+
+<h1>User details</h1>
+
+<hr />
+
+<div class="col-md-4">
+    <div class="row mb-3">
+        <a class="text-muted">First name:</a>
+        <input asp-for="FirstName" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Middle name:</a>
+        <input asp-for="MiddleName" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Last name:</a>
+        <input asp-for="LastName" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">EGN:</a>
+        <input asp-for="EGN" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Username:</a>
+        <input asp-for="UserName" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Email:</a>
+        <input asp-for="Email" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Phone number:</a>
+        <input asp-for="PhoneNumber" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Hire date:</a>
+        <input type="date" asp-for="HireDate" class="form-control" disabled />
+    </div>
+
+    @if (Model.IsActive)
+    {
+        <div class="row">
+            <a class="text-muted">This employee is active!</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <a class="text-muted">This employee is not active!</a>
+        </div>
+
+        <div class="row mb-3">
+            <a class="text-muted">Dismiss date:</a>
+            <input type="date" asp-for="DismissDate" class="form-control" disabled />
+        </div>
+    }
+</div>
