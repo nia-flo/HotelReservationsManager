@@ -19,12 +19,42 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @*<li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            if (this.User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Employees">Employees</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Rooms">Rooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Clients">Clients</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Reservations">Reservations</a>
+                                </li>
+                            }
+                            else
+                            {                                                        
+                                <li class="nav-item">                                        
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Rooms">Rooms</a>
+                                </li>                                                         
+                                <li class="nav-item">                                         
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Clients">Clients</a>
+                                </li>                                                         
+                                <li class="nav-item">                                         
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Reservations">Reservations</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
