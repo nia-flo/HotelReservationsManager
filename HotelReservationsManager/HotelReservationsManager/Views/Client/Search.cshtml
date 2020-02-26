@@ -1,0 +1,62 @@
+﻿@model HotelReservationsManager.Models.ClientViewModels.ClientSearchViewModel
+
+@{
+    ViewData["Title"] = "Search clients";
+}
+
+<head>
+    <script src="https://unpkg.com/@@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<h1 class="text-center">Clients</h1>
+<hr class="style1 bg-warning mb-2" />
+
+<a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Client">Create new Client</a>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search" asp-controller="Client" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <select class="custom-select mb-3" asp-for="SearchBy">
+                <option value="FirstName">First name</option>
+                <option value="LastName">Last name</option>
+                <option value="Email">Email</option>
+                <option value="PhoneNumber">Phone number</option>
+            </select>
+            <div class="form-group">
+                @*<label asp-for="Value" class="control-label">Username</label>*@
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="justify-content-between">
+    @foreach (var client in Model.Clients)
+    {
+            <div class="d-flex row my-3 mx-2">
+                <div class="col-md-10">
+                    <h3>@client.FirstName @client.LastName</h3>
+
+                    <a class="text-muted">
+                        <b>username:</b> @client.Email
+                        &emsp
+                        <b>email:</b> @client.PhoneNumber
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+            </div>
+        
+    }
+</div>
+
+
