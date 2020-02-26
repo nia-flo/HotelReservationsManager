@@ -206,7 +206,7 @@ namespace HotelReservationsManager.Controllers
         {
             User user = context.Users.First(u => u.Id == id);
 
-            UserDetailsViewModel model = new UserDetailsViewModel()
+            EditUserViewModel model = new EditUserViewModel()
             {
                 Id = user.Id,
                 UserName = user.UserName,
@@ -226,27 +226,27 @@ namespace HotelReservationsManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(UserDetailsViewModel model)
+        public IActionResult EditUser(EditUserViewModel model)
         {
-            User user = context.Users.First(u => u.Id == model.Id);
+                User user = context.Users.First(u => u.Id == model.Id);
 
-            user.Id = model.Id;
-            user.UserName = model.UserName;
-            user.FirstName = model.FirstName;
-            user.MiddleName = model.MiddleName;
-            user.LastName = model.LastName;
-            user.EGN = model.EGN;
-            user.Email = model.Email;
-            user.PhoneNumber = model.PhoneNumber;
-            user.DismissDate = model.DismissDate;
-            user.HireDate = model.HireDate;
-            user.IsActive = model.IsActive;
+                user.Id = model.Id;
+                user.UserName = model.UserName;
+                user.FirstName = model.FirstName;
+                user.MiddleName = model.MiddleName;
+                user.LastName = model.LastName;
+                user.EGN = model.EGN;
+                user.Email = model.Email;
+                user.PhoneNumber = model.PhoneNumber;
+                user.DismissDate = model.DismissDate;
+                user.HireDate = model.HireDate;
+                user.IsActive = model.IsActive;
 
-            context.Update(user);
-            context.SaveChanges();
+                context.Update(user);
+                context.SaveChanges();
 
-            //return Redirect("~/User/UserDetails/" + model.Id);
-            return Redirect("~/");
+                //return Redirect("~/User/UserDetails/" + model.Id);
+                return Redirect("~/");
         }
 
         public IActionResult Hire(string id)
