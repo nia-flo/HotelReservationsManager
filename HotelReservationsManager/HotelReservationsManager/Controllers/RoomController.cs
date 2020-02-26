@@ -6,6 +6,7 @@ using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
 using HotelReservationsManager.Data.Models.Enums;
 using HotelReservationsManager.Models;
+using HotelReservationsManager.Models.RoomViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationsManager.Controllers
@@ -68,6 +69,43 @@ namespace HotelReservationsManager.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            Room room = context.Rooms.FindAsync(id).Result;
+
+            RoomEditViewModel model = new RoomEditViewModel()
+            {
+                Id = room.Id,
+                Capacity = room.Capacity,
+                Type = room.Type,
+                AdultPrice = room.AdultPrice,
+                ChildPrice = room.ChildPrice,
+                Number = room.Number,
+                IsFree = room.IsFree
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RoomEditViewModel model)
+        {
+            Room room = context.Rooms.FindAsync(model.Id).Result;
+
+            room.Capacity = model.Capacity;
+            room.Type = model.Type;
+            room.AdultPrice = model.AdultPrice;
+            room.ChildPrice = model.ChildPrice;
+            room.Number = model.Number;
+            room.IsFree = model.IsFree;
+
+            context.Update(room);
+            context.SaveChanges();
+
+            return Redirect("~/Room/Details/" + room.Id);
         }
     }
 }
