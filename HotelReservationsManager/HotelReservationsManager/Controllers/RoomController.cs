@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
+using HotelReservationsManager.Data.Models.Enums;
 using HotelReservationsManager.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,21 +22,21 @@ namespace HotelReservationsManager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            CreateRoomViewModel model = new CreateRoomViewModel();
+            RoomCreateViewModel model = new RoomCreateViewModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create(CreateRoomViewModel model)
+        public IActionResult Create(RoomCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && context.Rooms.FirstOrDefault(r => r.Number == model.Number) == null)
             {
                 Room room = new Room()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Capacity = model.Capacity,
-                    Type = model.Type,
+                    Type = (RoomType)model.Type,
                     AdultPrice = model.AdultPrice,
                     ChildPrice = model.ChildPrice,
                     Number = model.Number,
@@ -45,25 +46,27 @@ namespace HotelReservationsManager.Controllers
                 context.Rooms.AddAsync(room);
                 context.SaveChanges();
 
-                RoomViewModel roomViewModel = new RoomViewModel()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Capacity = room.Capacity,
-                    Type = room.Type,
-                    AdultPrice = room.AdultPrice,
-                    ChildPrice = room.ChildPrice,
-                    Number = room.Number,
-                    IsFree = room.IsFree
-                };
-
-                return RoomDetails(roomViewModel);
+                return Redirect("~/Room/Details/" + room.Id);
             }
 
             return View(model);
         }
 
-        public IActionResult RoomDetails(RoomViewModel model)
+        public IActionResult Details(string id)
         {
+            Room room = context.Rooms.FindAsync(id).Result;
+
+            RoomDetailsViewModel model = new RoomDetailsViewModel()
+            {
+                Id = room.Id,
+                Capacity = room.Capacity,
+                Type = room.Type,
+                AdultPrice = room.AdultPrice,
+                ChildPrice = room.ChildPrice,
+                Number = room.Number,
+                IsFree = room.IsFree
+            };
+
             return View(model);
         }
     }

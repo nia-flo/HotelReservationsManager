@@ -1,15 +1,9 @@
 ﻿using HotelReservationsManager.Data.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HotelReservationsManager.Models
 {
-    public class RoomViewModel
+    public class RoomCreateViewModel
     {
-        public string Id { get; set; }
-
         public int Capacity { get; set; }
 
         public RoomType Type { get; set; }
