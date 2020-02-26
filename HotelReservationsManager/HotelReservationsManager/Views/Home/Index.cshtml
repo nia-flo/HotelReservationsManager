@@ -7,6 +7,9 @@
         <h2 class="display-7">in Hotel Reservations Manager</h2>
 
         <div class="row">
+            <div class="col-md-2">
+                <a>User:</a>
+            </div>
             <div class="col-md-1">
                 <a asp-action="Employees" asp-controller="User" class="mb-3 btn btn-warning my-3">Employees</a>
             </div>
@@ -14,5 +17,13 @@
                 <a asp-action="SearchEmployees" asp-controller="User" class="mb-3 btn btn-warning my-3">Search employees</a>
             </div>
         </div>
-        
+
+        <div class="row">
+            <div class="col-md-2">
+                <a>Client:</a>
+            </div>
+            <div class="col-md-1">
+                <a asp-action="Create" asp-controller="Client" class="mb-3 btn btn-warning my-3">Create</a>
+            </div>
+        </div>
     </div>
