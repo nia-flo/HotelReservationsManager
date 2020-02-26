@@ -1,14 +1,15 @@
-﻿@model HotelReservationsManager.Models.ClientViewModels.ClientCreateViewModel
+﻿@model HotelReservationsManager.Models.ClientViewModels.ClientEditViewModel
 @{
-    ViewData["Title"] = "Create Client";
+    ViewData["Title"] = "Client details";
 }
 
-<h1>Create Client</h1>
+<h1>Client details</h1>
 
 <hr />
 
 <div class="col-md-4">
-    <form asp-action="Create" asp-controller="Client" method="post">
+
+    <form asp-action="Edit" asp-controller="Client" method="post">
         <div class="row mb-3">
             <a class="text-muted">First name:</a>
             <input asp-for="FirstName" class="form-control" />
@@ -30,7 +31,14 @@
         </div>
 
         <div class="row mb-3 custom-control custom-checkbox">
-            <input asp-for="IsAdult" type="checkbox" class="custom-control-input" id="isAdult">
+            @if (Model.IsAdult)
+            {
+                <input asp-for="IsAdult" type="checkbox" class="custom-control-input" id="isAdult">
+            }
+            else
+            {
+                <input asp-for="IsAdult" type="checkbox" class="custom-control-input" id="isAdult" checked>
+            }
             <label class="custom-control-label" for="isAdult">A child</label>
         </div>
 
@@ -40,7 +48,3 @@
     </form>
 
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

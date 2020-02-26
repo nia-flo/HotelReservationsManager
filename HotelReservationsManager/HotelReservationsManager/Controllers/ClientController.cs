@@ -3,6 +3,7 @@ using HotelReservationsManager.Data.Models;
 using HotelReservationsManager.Models.ClientViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace HotelReservationsManager.Controllers
 {
@@ -37,7 +38,59 @@ namespace HotelReservationsManager.Controllers
             context.Clients.AddAsync(client);
             context.SaveChanges();
 
-            return Redirect("~/");
+            return Redirect("~/Client/Details/" + client.Id);
+        }
+
+        public IActionResult Details(string id)
+        {
+            Client client = context.Clients.First(context => context.Id == id);
+
+            ClientDetailsViewModel model = new ClientDetailsViewModel()
+            {
+                Id = client.Id,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                IsAdult = client.IsAdult
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            Client client = context.Clients.FindAsync(id).Result;
+
+            ClientEditViewModel model = new ClientEditViewModel()
+            {
+                Id = client.Id,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                IsAdult = client.IsAdult
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ClientEditViewModel model)
+        {
+            Client client = context.Clients.FindAsync(model.Id).Result;
+
+            client.FirstName = model.FirstName;
+            client.LastName = model.LastName;
+            client.PhoneNumber = model.PhoneNumber;
+            client.Email = model.Email;
+            client.IsAdult = !model.IsAdult;
+
+            context.Clients.Update(client);
+            context.SaveChanges();
+
+            return Redirect("~/Client/Details/" + client.Id);
         }
     }
 }
