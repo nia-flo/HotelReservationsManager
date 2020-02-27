@@ -13,41 +13,49 @@
         <div class="row mb-3">
             <a class="text-muted">First name:</a>
             <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Middle name:</a>
             <input asp-for="MiddleName" class="form-control" />
+            <span asp-validation-for="MiddleName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Last name:</a>
             <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">EGN:</a>
             <input asp-for="EGN" class="form-control" />
+            <span asp-validation-for="EGN" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Username:</a>
             <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Email:</a>
             <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Phone number:</a>
             <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Hire date:</a>
             <input type="date" asp-for="HireDate" class="form-control" />
+            <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
 
         @*@if (Model.IsActive)

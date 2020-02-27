@@ -228,6 +228,8 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult EditUser(EditUserViewModel model)
         {
+            if (ModelState.IsValid)
+            {
                 User user = context.Users.First(u => u.Id == model.Id);
 
                 user.Id = model.Id;
@@ -247,6 +249,9 @@ namespace HotelReservationsManager.Controllers
 
                 //return Redirect("~/User/UserDetails/" + model.Id);
                 return Redirect("~/");
+            }
+
+            return View(model);
         }
 
         public IActionResult Hire(string id)
