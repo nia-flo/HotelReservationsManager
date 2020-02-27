@@ -106,7 +106,7 @@ namespace HotelReservationsManager.Controllers
                 Id = Guid.NewGuid().ToString(),
                 CheckInDate = model.CheckInDate,
                 CheckOutDate = model.CheckOutDate,
-                Clients = model.ChoosenClients.Select(c => context.Clients.Find(c.Id)).ToList(),
+                //Clients = model.ChoosenClients.Select(c => context.Clients.Find(c.Id)).ToList(),
                 Creator = context.Users.Find(model.CreatorId),
                 IsAllInclusive = model.IsAllInclusive,
                 IsBreakfastIncluded = model.IsBreakfastIncluded,

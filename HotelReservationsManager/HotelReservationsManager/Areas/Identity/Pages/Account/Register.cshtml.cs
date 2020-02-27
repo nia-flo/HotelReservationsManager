@@ -130,14 +130,14 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
                 {
                     //_logger.LogInformation("User created a new account with password.");
 
-                    //if (_context.Users.Count() == 1)
-                    //{
-                    //    await _userManager.AddToRoleAsync(user, "Admin");
-                    //}
-                    //else
-                    //{
+                    if (_context.Users.Count() == 1)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else
+                    {
                         await _userManager.AddToRoleAsync(user, "Employee");
-                    //}
+                    }
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     return Redirect("~/User/Employees");

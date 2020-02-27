@@ -9,11 +9,11 @@ namespace HotelReservationsManager.Data.Models
     {
         public string Id { get; set; }
 
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
-        public User Creator { get; set; }
+        public virtual User Creator { get; set; }
 
-        public List<Client> Clients { get; set; }
+        public virtual List<ClientReservation> ClientReservations { get; set; }
 
         public DateTime CheckInDate { get; set; }
 

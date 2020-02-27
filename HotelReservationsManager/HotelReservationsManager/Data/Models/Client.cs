@@ -18,5 +18,7 @@ namespace HotelReservationsManager.Data.Models
         public string Email { get; set; }
 
         public bool IsAdult { get; set; }
+
+        public virtual List<ClientReservation> ClientReservations { get; set; }
     }
 }
