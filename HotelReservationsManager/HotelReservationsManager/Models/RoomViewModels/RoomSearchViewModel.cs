@@ -12,5 +12,17 @@ namespace HotelReservationsManager.Models.RoomViewModels
         public string Value { get; set; }
 
         public List<RoomViewModel> Rooms { get; set; }
+
+        public RoomSearchViewModel()
+        {
+
+        }
+
+        public RoomSearchViewModel(string searchBy, string value, List<RoomViewModel> rooms)
+        {
+            SearchBy = searchBy;
+            Value = value;
+            Rooms = rooms;
+        }
     }
 }

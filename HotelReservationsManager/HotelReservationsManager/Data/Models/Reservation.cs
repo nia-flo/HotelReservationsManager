@@ -23,12 +23,14 @@ namespace HotelReservationsManager.Data.Models
 
         public bool IsAllInclusive { get; set; }
 
+        public decimal Price { get; set; }
+
         public Reservation()
         {
                 
         }
 
-        public Reservation(Room room, User creator, List<ClientReservation> clientReservations, DateTime checkInDate, DateTime checkOutDate, bool isBreakfastIncluded, bool isAllInclusive)
+        public Reservation(Room room, User creator, List<ClientReservation> clientReservations, DateTime checkInDate, DateTime checkOutDate, bool isBreakfastIncluded, bool isAllInclusive, decimal price)
         {
             Id = Guid.NewGuid().ToString();
             Room = room;
@@ -38,6 +40,7 @@ namespace HotelReservationsManager.Data.Models
             CheckOutDate = checkOutDate;
             IsBreakfastIncluded = isBreakfastIncluded;
             IsAllInclusive = isAllInclusive;
+            Price = price;
         }
     }
 }

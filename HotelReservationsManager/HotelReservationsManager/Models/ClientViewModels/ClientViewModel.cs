@@ -14,5 +14,18 @@ namespace HotelReservationsManager.Models.ClientViewModels
         public string LastName { get; set; }
 
         public bool IsAdult { get; set; }
+
+        public ClientViewModel()
+        {
+
+        }
+
+        public ClientViewModel(string id, string firstName, string lastName, bool isAdult)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            IsAdult = isAdult;
+        }
     }
 }

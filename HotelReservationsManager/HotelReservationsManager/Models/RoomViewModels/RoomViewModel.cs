@@ -17,5 +17,19 @@ namespace HotelReservationsManager.Models.RoomViewModels
         public bool IsFree { get; set; }
 
         public int Number { get; set; }
+
+        public RoomViewModel()
+        {
+
+        }
+
+        public RoomViewModel(string id, int capacity, RoomType type, bool isFree, int number)
+        {
+            Id = id;
+            Capacity = capacity;
+            Type = type;
+            IsFree = isFree;
+            Number = number;
+        }
     }
 }

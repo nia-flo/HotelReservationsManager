@@ -1,0 +1,83 @@
+﻿@model HotelReservationsManager.Models.Reservation.ReservationDetailsViewModel
+@{
+    ViewData["Title"] = "Reservation Details";
+}
+
+
+    <h1>Reservation Details</h1>
+<hr class="style1 bg-warning mb-2" />
+
+<br />
+
+<div class="col-md-4">
+
+    <h2>Stay details:</h2>
+    <hr />
+
+    <div class="row mb-3">
+        <a class="text-muted">Check-in date:</a>
+        <input type="date" asp-for="CheckInDate" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Check-out date:</a>
+        <input type="date" asp-for="CheckOutDate" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3 custom-control custom-checkbox">
+        <input asp-for="IsBreakfastIncluded" type="checkbox" class="custom-control-input" id="IsBreakfastIncluded" disabled>
+        <label class="custom-control-label" for="IsBreakfastIncluded">With included breakfast</label>
+    </div>
+
+    <div class="row mb-3 custom-control custom-checkbox">
+        <input asp-for="IsAllInclusive" type="checkbox" class="custom-control-input" id="IsAllInclusive" disabled>
+        <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
+    </div>
+
+    <h2>Clients:</h2>
+    <hr />
+
+    <div class="justify-content-between">
+        @foreach (var client in Model.Clients)
+        {
+            <div class="d-flex row my-3 mx-2">
+                <div class="col-md-10">
+                    <h3>@client.FirstName @client.LastName</h3>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <h2>Room:</h2>
+    <hr />
+
+    <div class="d-flex row my-3 mx-2">
+        <div class="col-md-10">
+            <h3>No. @Model.Room.Number - @Model.Room.Type</h3>
+
+            <a class="text-muted">
+                <b>capacity:</b> @Model.Room.Capacity
+            </a>
+        </div>
+
+        <div class="col-md-1">
+            <a asp-action="Details" asp-route-id="@Model.Room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+        </div>
+    </div>
+
+    <hr />
+    <a>
+        <b>Price:</b> @Model.Price
+    </a>
+
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

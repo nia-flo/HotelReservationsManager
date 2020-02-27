@@ -9,11 +9,11 @@
 
 <br />
 
-<h2>Choose stay options</h2>
-<hr />
-
 <div class="col-md-4">
     <form asp-action="Create" asp-controller="Reservation" method="post">
+        <h2>Choose stay options</h2>
+        <hr />
+
         <div class="row mb-3">
             <a class="text-muted">Check-in date:</a>
             <input type="date" asp-for="CheckInDate" class="form-control" />
@@ -67,7 +67,7 @@
             </div>
         </div>*@
 
-        <select class="custom-select mb-3" name="ChoosenClients" asp-for="ChoosenClients" multiple >
+        <select class="custom-select mb-3" name="ChoosenClients" asp-for="ChoosenClients" multiple>
             <option selected disabled>--- Select clients ---</option>
             @foreach (var client in Model.Clients)
             {
@@ -75,7 +75,7 @@
             }
         </select>
 
-        <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom" >
+        <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom">
             <option selected disabled>--- Select a room ---</option>
             @foreach (var room in Model.Rooms)
             {
