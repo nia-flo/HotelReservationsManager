@@ -1,4 +1,5 @@
-﻿@model HotelReservationsManager.Models.RoomViewModels.RoomSearchViewModel
+﻿@using HotelReservationsManager.Data.Models.Enums
+@model HotelReservationsManager.Models.RoomViewModels.RoomSearchViewModel
 
 @{
     ViewData["Title"] = "Search rooms";
@@ -69,7 +70,22 @@
         {
             <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
                 <div class="col-md-10">
-                    <h3>No. @room.Number - @room.Type</h3>
+                    @if (room.Type == RoomType.TwoBeds)
+                    {
+                        <h3>No. @room.Number - Room with separate beds</h3>
+                    }
+                    else if (room.Type == RoomType.DoubleBed)
+                    {
+                        <h3>No. @room.Number - Room with a double bed</h3>
+                    }
+                    else if (room.Type == RoomType.PentHouse)
+                    {
+                        <h3>No. @room.Number - Penthouse</h3>
+                    }
+                    else
+                    {
+                        <h3>No. @room.Number - @room.Type</h3>
+                    }
 
                     <a class="text-muted">
                         <b>capacity:</b> @room.Capacity
