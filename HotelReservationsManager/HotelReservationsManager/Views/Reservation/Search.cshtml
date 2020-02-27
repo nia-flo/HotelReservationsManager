@@ -1,0 +1,71 @@
+﻿@model HotelReservationsManager.Models.ReservationViewModels.ReservationSearchViewModel
+
+@{
+    ViewData["Title"] = "Search reservation";
+}
+
+<h1 class="text-center">Reservations</h1>
+<hr class="style1 bg-warning mb-2" />
+
+<a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Reservation">Create new Reservation</a>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search" asp-controller="Reservation" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
+                <option value="default" selected disabled>--- Select a search criteria ---</option>
+                <option value="RoomType">Room type</option>
+                <option value="RoomNumber">RoomNumber</option>
+            </select>
+
+            <select id="search-by-roomtype" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
+                <option value="1">Room with separate beds</option>
+                <option value="2">Room with a double bed</option>
+                <option value="3">Apartment</option>
+                <option value="4">Penthouse</option>
+                <option value="5">Maisonette</option>
+            </select>
+
+            <div id="search-by-roomnumber" class="search-by-criteria d-none form-group">
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="justify-content-between">
+    @foreach (var reservation in Model.Reservations)
+    {
+        <div class="d-flex row my-3 mx-2">
+            <div class="col-md-10">
+                <h3>Room No. @reservation.RoomNumber - @reservation.RoomType</h3>
+
+                <a class="text-muted">
+                    <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
+                    &nbsp;
+                    <b>Price:</b> @reservation.Price
+                </a>
+            </div>
+
+            <div class="col-md-1">
+                <a asp-action="Details" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+<script>
+    $('#search-by').change(function () {
+        $('.search-by-criteria').addClass('d-none');
+        $('#search-by-' + $(this).val().toLowerCase()).removeClass('d-none');
+    });
+</script>

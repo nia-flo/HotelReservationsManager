@@ -5,9 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
+using HotelReservationsManager.Data.Models.Enums;
 using HotelReservationsManager.Models;
 using HotelReservationsManager.Models.ClientViewModels;
-using HotelReservationsManager.Models.Reservation;
+using HotelReservationsManager.Models.ReservationViewModels;
 using HotelReservationsManager.Models.RoomViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -128,9 +129,58 @@ namespace HotelReservationsManager.Controllers
                 .ToList();
 
 
-            ReservationDetailsViewModel model = new ReservationDetailsViewModel(id, room, creator, clients, 
-                reservation.CheckInDate, reservation.CheckOutDate, reservation.IsBreakfastIncluded, 
+            ReservationDetailsViewModel model = new ReservationDetailsViewModel(id, room, creator, clients,
+                reservation.CheckInDate, reservation.CheckOutDate, reservation.IsBreakfastIncluded,
                 reservation.IsAllInclusive, reservation.Price);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Search()
+        {
+            List<ReservationViewModel> reservations = context.Reservations
+                .Select(r => new ReservationViewModel(r.Id, r.Room.Number, r.Room.Type, r.CheckInDate,
+                    r.CheckOutDate, r.Price))
+                .ToList();
+
+            ReservationSearchViewModel model = new ReservationSearchViewModel(reservations);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(ReservationSearchViewModel model)
+        {
+            if (model.SearchBy == "RoomType")
+            {
+                model.Reservations = context.Reservations.Where(u => u.Room.Type == (RoomType)int.Parse(model.Value))
+                               .ToList()
+                               .OrderBy(u => u.Room.Number)
+                               .ThenBy(u => u.Room.Type)
+                               .Select(u => new ReservationViewModel(u.Id, u.Room.Number, u.Room.Type, u.CheckInDate,
+                                    u.CheckOutDate, u.Price))
+                               .ToList();
+            }
+            else if (model.SearchBy == "RoomNumber")
+            {
+                model.Reservations = context.Reservations.Where(u => u.Room.Number == int.Parse(model.Value))
+                               .ToList()
+                               .OrderBy(u => u.Room.Number)
+                               .ThenBy(u => u.Room.Type)
+                               .Select(u => new ReservationViewModel(u.Id, u.Room.Number, u.Room.Type, u.CheckInDate,
+                                    u.CheckOutDate, u.Price))
+                               .ToList();
+            }
+
+            model.SearchBy = "default";
+
+            model.Reservations = context.Reservations
+                               .OrderBy(u => u.Room.Number)
+                               .ThenBy(u => u.Room.Type)
+                               .Select(u => new ReservationViewModel(u.Id, u.Room.Number, u.Room.Type, u.CheckInDate,
+                                    u.CheckOutDate, u.Price))
+                               .ToList();
 
             return View(model);
         }
