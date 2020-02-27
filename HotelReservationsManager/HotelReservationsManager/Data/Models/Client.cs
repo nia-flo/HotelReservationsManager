@@ -20,5 +20,21 @@ namespace HotelReservationsManager.Data.Models
         public bool IsAdult { get; set; }
 
         public virtual List<ClientReservation> ClientReservations { get; set; }
+
+        public Client()
+        {
+
+        }
+
+        public Client(string firstName, string lastName, string phoneNumber, string email, bool isAdult, List<ClientReservation> clientReservations)
+        {
+            Id = Guid.NewGuid().ToString();
+            FirstName = firstName;
+            LastName = lastName;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            IsAdult = isAdult;
+            ClientReservations = clientReservations;
+        }
     }
 }

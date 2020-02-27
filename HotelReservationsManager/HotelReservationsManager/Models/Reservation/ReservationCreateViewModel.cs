@@ -9,12 +9,6 @@ namespace HotelReservationsManager.Models.Reservation
 {
     public class ReservationCreateViewModel
     {
-        public int Step { get; set; }
-
-        //Step1
-
-        public string CreatorId { get; set; }
-
         public DateTime CheckInDate { get; set; }
 
         public DateTime CheckOutDate { get; set; }
@@ -23,14 +17,12 @@ namespace HotelReservationsManager.Models.Reservation
 
         public bool IsAllInclusive { get; set; }
 
-        //Step2
+        public List<string> ChoosenClients { get; set; }
 
-        public List<ClientViewModel> ChoosenClients { get; set; }
+        public List<ClientViewModel> Clients { get; set; }
 
-        public ClientSearchViewModel ClientsSearch { get; set; }
+        public List<RoomViewModel> Rooms { get; set; }
 
-        //Step3
-
-        public string RoomId { get; set; }
+        public string ChoosenRoom { get; set; }
     }
 }

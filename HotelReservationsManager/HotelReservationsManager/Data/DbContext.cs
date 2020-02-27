@@ -22,19 +22,12 @@ namespace HotelReservationsManager.Data
         {
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<ClientReservation>()
-        //        .HasKey(cr => new { cr.ClientId, cr.ReservationId });
-        //    modelBuilder.Entity<ClientReservation>()
-        //        .HasOne(cr => cr.Client)
-        //        .WithMany(c => c.ClientReservations)
-        //        .HasForeignKey(cr => cr.ClientId);
-        //    modelBuilder.Entity<ClientReservation>()
-        //        .HasOne(cr => cr.Reservation)
-        //        .WithMany(c => c.ClientReservations)
-        //        .HasForeignKey(cr => cr.ReservationId);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+
+            base.OnConfiguring(optionsBuilder);
+        }
 
     }
 }

@@ -7,6 +7,7 @@ using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
 using HotelReservationsManager.Models.ClientViewModels;
 using HotelReservationsManager.Models.Reservation;
+using HotelReservationsManager.Models.RoomViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,12 +29,24 @@ namespace HotelReservationsManager.Controllers
         {
             ReservationCreateViewModel model = new ReservationCreateViewModel()
             {
-                Step = 1,
-                CreatorId = userManager.GetUserId(User),
                 CheckInDate = DateTime.Now,
                 CheckOutDate = DateTime.Now,
-                ChoosenClients = new List<ClientViewModel>(),
-                ClientsSearch = new ClientSearchViewModel()
+                ChoosenClients = new List<string>(),
+                Clients = context.Clients.Select(c => new ClientViewModel()
+                                            {
+                                                FirstName = c.FirstName,
+                                                LastName = c.LastName,
+                                                Id = c.Id,
+                                                IsAdult = c.IsAdult
+                                            }).ToList(),
+                Rooms = context.Rooms.Select(r => new RoomViewModel()
+                                            {
+                                                Id = r.Id,
+                                                Capacity = r.Capacity,
+                                                Type = r.Type,
+                                                Number = r.Number
+
+                                            }).ToList()
             };
 
             return View(model);
@@ -42,76 +55,20 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Create(ReservationCreateViewModel model)
         {
-            if (model.Step == 1)
-            {
-                model.Step++;
+            Room room = context.Rooms.Find(model.ChoosenRoom);
 
-                return View(model);
-            }
-            else if (model.Step == 2)
-            {
-                if (model.ClientsSearch.SearchBy == "FirstName")
-                {
-                    model.ClientsSearch.Clients =
-                    context.Clients.Where(u => u.FirstName == model.ClientsSearch.Value)
-                                   .Select(u => new ClientViewModel()
-                                   {
-                                       Id = u.Id,
-                                       FirstName = u.FirstName,
-                                       LastName = u.LastName
-                                   })
-                                   .Where(c => !model.ChoosenClients.Contains(c))
-                                   .ToList()
-                                   .OrderBy(u => u.FirstName)
-                                   .ThenBy(u => u.LastName)
-                                   .ToList();
-                }
-                else if (model.ClientsSearch.SearchBy == "LastName")
-                {
-                    model.ClientsSearch.Clients =
-                    context.Clients.Where(u => u.LastName == model.ClientsSearch.Value)
-                                   .Select(u => new ClientViewModel()
-                                   {
-                                       Id = u.Id,
-                                       FirstName = u.FirstName,
-                                       LastName = u.LastName
-                                   })
-                                   .Where(c => !model.ChoosenClients.Contains(c))
-                                   .ToList()
-                                   .OrderBy(u => u.FirstName)
-                                   .ThenBy(u => u.LastName)
-                                   .ToList();
-                }
-                else
-                {
-                    model.ClientsSearch.Clients = context.Clients
-                                   .Select(u => new ClientViewModel()
-                                   {
-                                       Id = u.Id,
-                                       FirstName = u.FirstName,
-                                       LastName = u.LastName
-                                   })
-                                   .Where(c => !model.ChoosenClients.Contains(c))
-                                   .ToList()
-                                   .OrderBy(u => u.FirstName)
-                                   .ThenBy(u => u.LastName)
-                                   .ToList();
-                }
+            //TODO: check if the room is free in this period
 
-                return View(model);
-            }
+            User creator = context.Users.Find(userManager.GetUserId(User));
 
-            Reservation reservation = new Reservation()
-            {
-                Id = Guid.NewGuid().ToString(),
-                CheckInDate = model.CheckInDate,
-                CheckOutDate = model.CheckOutDate,
-                //Clients = model.ChoosenClients.Select(c => context.Clients.Find(c.Id)).ToList(),
-                Creator = context.Users.Find(model.CreatorId),
-                IsAllInclusive = model.IsAllInclusive,
-                IsBreakfastIncluded = model.IsBreakfastIncluded,
-                Room = context.Rooms.Find(model.RoomId)
-            };
+            Reservation reservation = new Reservation(room, creator, new List<ClientReservation>(), model.CheckInDate, model.CheckOutDate, model.IsBreakfastIncluded, model.IsAllInclusive);
+
+            reservation.ClientReservations = model.ChoosenClients.Select(c => context.Clients.Find(c))
+                .Select(c => new ClientReservation(c.Id, c, reservation.Id, reservation)).ToList();
+
+
+            context.Reservations.Add(reservation);
+            context.SaveChanges();
 
             return Redirect("~/Reservation/Details/" + reservation.Id);
         }

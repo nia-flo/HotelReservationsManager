@@ -15,5 +15,19 @@ namespace HotelReservationsManager.Data.Models
 
         public string ReservationId { get; set; }
         public virtual Reservation Reservation { get; set; }
+
+        public ClientReservation()
+        {
+                
+        }
+
+        public ClientReservation(string clientId, Client client, string reservationId, Reservation reservation)
+        {
+            Id = Guid.NewGuid().ToString();
+            ClientId = clientId;
+            Client = client;
+            ReservationId = reservationId;
+            Reservation = reservation;
+        }
     }
 }

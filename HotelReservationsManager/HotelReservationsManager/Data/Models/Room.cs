@@ -21,5 +21,21 @@ namespace HotelReservationsManager.Data.Models
         public decimal ChildPrice { get; set; }
 
         public int Number { get; set; }
+
+        public Room()
+        {
+
+        }
+
+        public Room(int capacity, RoomType type, bool isFree, decimal adultPrice, decimal childPrice, int number)
+        {
+            Id = Guid.NewGuid().ToString();
+            Capacity = capacity;
+            Type = type;
+            IsFree = isFree;
+            AdultPrice = adultPrice;
+            ChildPrice = childPrice;
+            Number = number;
+        }
     }
 }
