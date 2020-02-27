@@ -22,8 +22,6 @@
             <select class="custom-select mb-3" asp-for="SearchBy">
                 <option value="FirstName">First name</option>
                 <option value="LastName">Last name</option>
-                <option value="Email">Email</option>
-                <option value="PhoneNumber">Phone number</option>
             </select>
             <div class="form-group">
                 @*<label asp-for="Value" class="control-label">Username</label>*@
@@ -43,12 +41,6 @@
             <div class="d-flex row my-3 mx-2">
                 <div class="col-md-10">
                     <h3>@client.FirstName @client.LastName</h3>
-
-                    <a class="text-muted">
-                        <b>username:</b> @client.Email
-                        &emsp
-                        <b>email:</b> @client.PhoneNumber
-                    </a>
                 </div>
 
                 <div class="col-md-1">

@@ -105,10 +105,8 @@ namespace HotelReservationsManager.Controllers
                                .Select(u => new ClientViewModel()
                                {
                                    Id = u.Id,
-                                   Email = u.Email,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName,
-                                   PhoneNumber = u.PhoneNumber
+                                   LastName = u.LastName
                                })
                                .ToList();
             }
@@ -122,44 +120,8 @@ namespace HotelReservationsManager.Controllers
                                .Select(u => new ClientViewModel()
                                {
                                    Id = u.Id,
-                                   Email = u.Email,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName,
-                                   PhoneNumber = u.PhoneNumber
-                               })
-                               .ToList();
-            }
-            else if (model.SearchBy == "Email")
-            {
-                model.Clients =
-                context.Clients.Where(u => u.Email == model.Value)
-                               .ToList()
-                               .OrderBy(u => u.FirstName)
-                               .ThenBy(u => u.LastName)
-                               .Select(u => new ClientViewModel()
-                               {
-                                   Id = u.Id,
-                                   Email = u.Email,
-                                   FirstName = u.FirstName,
-                                   LastName = u.LastName,
-                                   PhoneNumber = u.PhoneNumber
-                               })
-                               .ToList();
-            }
-            else if (model.SearchBy == "PhoneNumber")
-            {
-                model.Clients =
-                context.Clients.Where(u => u.PhoneNumber == model.Value)
-                               .ToList()
-                               .OrderBy(u => u.FirstName)
-                               .ThenBy(u => u.LastName)
-                               .Select(u => new ClientViewModel()
-                               {
-                                   Id = u.Id,
-                                   Email = u.Email,
-                                   FirstName = u.FirstName,
-                                   LastName = u.LastName,
-                                   PhoneNumber = u.PhoneNumber
+                                   LastName = u.LastName
                                })
                                .ToList();
             }
@@ -171,10 +133,8 @@ namespace HotelReservationsManager.Controllers
                                .Select(u => new ClientViewModel()
                                {
                                    Id = u.Id,
-                                   Email = u.Email,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName,
-                                   PhoneNumber = u.PhoneNumber
+                                   LastName = u.LastName
                                })
                                .ToList();
             }

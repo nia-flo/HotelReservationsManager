@@ -1,0 +1,99 @@
+﻿@model HotelReservationsManager.Models.RoomViewModels.RoomSearchViewModel
+
+@{
+    ViewData["Title"] = "Search rooms";
+}
+
+<head>
+    <script src="https://unpkg.com/@@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<h1 class="text-center">Rooms</h1>
+<hr class="style1 bg-warning mb-2" />
+
+<a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Room">Create new Room</a>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search" asp-controller="Room" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
+                <option value="Capacity" selected disabled>--- Select a search criteria ---</option>
+                <option value="Capacity">Capacity</option>
+                <option value="Type">Room type</option>
+                <option value="IsFree">Free or occupated room</option>
+            </select>
+
+            <div id="search-by-capacity" class="search-by-criteria d-none form-group">
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+
+            <select id="search-by-type" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
+                <option value="1">Room with separate beds</option>
+                <option value="2">Room with a double bed</option>
+                <option value="3">Apartment</option>
+                <option value="4">Penthouse</option>
+                <option value="5">Maisonette</option>
+            </select>
+
+            <select id="search-by-isfree" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
+                <option value="Free">Free</option>
+                <option value="Occupated">Occupated</option>
+            </select>
+
+            <div class="form-group col-md2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="justify-content-between">
+    @foreach (var room in Model.Rooms)
+    {
+        if (room.IsFree)
+        {
+            <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
+                <div class="col-md-10">
+                    <h3>No. @room.Number - @room.Type</h3>
+
+                    <a class="text-muted">
+                        <b>capacity:</b> @room.Capacity
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
+                <div class="col-md-10">
+                    <h3>No. @room.Number - @room.Type</h3>
+
+                    <a class="text-muted">
+                        <b>capacity:</b> @room.Capacity
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+            </div>
+        }
+
+
+    }
+</div>
+
+<script>
+    $('#search-by').change(function () {
+        $('.search-by-criteria').addClass('d-none');
+        $('#search-by-' + $(this).val().toLowerCase()).removeClass('d-none');
+    });
+</script>

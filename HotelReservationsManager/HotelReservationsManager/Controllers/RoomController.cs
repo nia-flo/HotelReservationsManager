@@ -107,5 +107,75 @@ namespace HotelReservationsManager.Controllers
 
             return Redirect("~/Room/Details/" + room.Id);
         }
+
+        public IActionResult Search(RoomSearchViewModel model)
+        {
+            if (model.SearchBy == "Capacity")
+            {
+                model.Rooms = context.Rooms.Where(u => u.Capacity == int.Parse(model.Value))
+                               .ToList()
+                               .OrderBy(u => u.Number)
+                               .ThenBy(u => u.Type)
+                               .Select(u => new RoomViewModel()
+                               {
+                                   Id = u.Id,
+                                   Capacity = u.Capacity,
+                                   Number = u.Number,
+                                   IsFree = u.IsFree,
+                                   Type = u.Type
+                               })
+                               .ToList();
+            }
+            else if (model.SearchBy == "Type")
+            {
+                model.Rooms = context.Rooms.Where(u => u.Type == (RoomType)int.Parse(model.Value))
+                               .ToList()
+                               .OrderBy(u => u.Number)
+                               .ThenBy(u => u.Type)
+                               .Select(u => new RoomViewModel()
+                               {
+                                   Id = u.Id,
+                                   Capacity = u.Capacity,
+                                   Number = u.Number,
+                                   IsFree = u.IsFree,
+                                   Type = u.Type
+                               })
+                               .ToList();
+            }
+            else if (model.SearchBy == "IsFree")
+            {
+                bool isFree = (model.Value == "Free");
+                model.Rooms = context.Rooms.Where(u => u.IsFree == isFree)
+                               .ToList()
+                               .OrderBy(u => u.Number)
+                               .ThenBy(u => u.Type)
+                               .Select(u => new RoomViewModel()
+                               {
+                                   Id = u.Id,
+                                   Capacity = u.Capacity,
+                                   Number = u.Number,
+                                   IsFree = u.IsFree,
+                                   Type = u.Type
+                               })
+                               .ToList();
+            }
+            else
+            {
+                model.Rooms = context.Rooms
+                               .OrderBy(u => u.Number)
+                               .ThenBy(u => u.Type)
+                               .Select(u => new RoomViewModel()
+                               {
+                                   Id = u.Id,
+                                   Capacity = u.Capacity,
+                                   Number = u.Number,
+                                   IsFree = u.IsFree,
+                                   Type = u.Type
+                               })
+                               .ToList();
+            }
+
+            return View(model);
+        }
     }
 }
