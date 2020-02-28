@@ -13,60 +13,58 @@
 
 <hr class="style1 bg-warning mb-2" />
 
-<a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Client">Create new Client</a>
 
-
-<div class="col-md-4 mx-auto">
-
+<div class="col-md-5 mx-auto">
     <div class="row">
-        <form asp-action="Search" asp-controller="Client" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select class="custom-select mb-3" asp-for="SearchBy">
-                <option value="FirstName">First name</option>
-                <option value="LastName">Last name</option>
-            </select>
-            <div class="form-group">
-                @*<label asp-for="Value" class="control-label">Username</label>*@
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+        <div class="col-md-8 mx-auto">
+            <form asp-action="Search" asp-controller="Client" method="post">
+                <select class="custom-select mb-3" asp-for="SearchBy">
+                    <option value="FirstName">First name</option>
+                    <option value="LastName">Last name</option>
+                </select>
 
-    <div class="justify-content-between">
-        @foreach (var client in Model.Clients)
-        {
-            <div class="d-flex row my-3 mx-2">
-                <div class="col-md-10">
-                    <h3>@client.FirstName @client.LastName</h3>
-
-                    @if (client.IsAdult)
-                    {
-                        <a class="text-muted">
-                            <b>Adult</b>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="text-muted">
-                            <b>Child</b>
-                        </a>
-                    }
-
+                <div class="form-group">
+                    <input asp-for="Value" class="form-control" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
                 </div>
 
-
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                <div class="d-flex">
+                    <div class="align-self-center mx-auto">
+                        <div class="form-group col-md-1">
+                            <input type="submit" value="Search" class="btn btn-primary" />
+                        </div>
+                    </div>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    @foreach (var client in Model.Clients)
+    {
+        <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
+            <div class="col-md-9">
+                <h3>@client.FirstName @client.LastName</h3>
+
+                @if (client.IsAdult)
+                {
+                    <a class="text-muted">
+                        <b>Adult</b>
+                    </a>
+                }
+                else
+                {
+                    <a class="text-muted">
+                        <b>Child</b>
+                    </a>
+                }
+
             </div>
 
-            <hr />
 
-        }
-    </div>
+            <div class="col-md-3">
+                <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+            </div>
+        </div>
+    }
 </div>
 

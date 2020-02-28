@@ -9,41 +9,45 @@
 
 <hr class="style1 bg-warning mb-2" />
 
-<a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Room">Create new Room</a>
-
-<div class="col-md-4 mx-auto">
+<div class="col-md-7 mx-auto">
     <div class="row">
-        <form asp-action="Search" asp-controller="Room" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
-                <option value="Capacity" selected disabled>--- Select a search criteria ---</option>
-                <option value="Capacity">Capacity</option>
-                <option value="Type">Room type</option>
-                <option value="IsFree">Free or occupated room</option>
-            </select>
+        <div class="col-md-6 mx-auto">
+            <form asp-action="Search" asp-controller="Room" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
+                    <option value="Capacity" selected disabled>--- Select a search criteria ---</option>
+                    <option value="Capacity">Capacity</option>
+                    <option value="Type">Room type</option>
+                    <option value="IsFree">Free or occupated room</option>
+                </select>
 
-            <div id="search-by-capacity" class="search-by-criteria d-none form-group">
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-            </div>
+                <div id="search-by-capacity" class="search-by-criteria d-none form-group">
+                    <input asp-for="Value" class="form-control" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                </div>
 
-            <select id="search-by-type" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
-                <option value="1">Room with separate beds</option>
-                <option value="2">Room with a double bed</option>
-                <option value="3">Apartment</option>
-                <option value="4">Penthouse</option>
-                <option value="5">Maisonette</option>
-            </select>
+                <select id="search-by-type" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
+                    <option value="1">Room with separate beds</option>
+                    <option value="2">Room with a double bed</option>
+                    <option value="3">Apartment</option>
+                    <option value="4">Penthouse</option>
+                    <option value="5">Maisonette</option>
+                </select>
 
-            <select id="search-by-isfree" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
-                <option value="Free">Free</option>
-                <option value="Occupated">Occupated</option>
-            </select>
+                <select id="search-by-isfree" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
+                    <option value="Free">Free</option>
+                    <option value="Occupated">Occupated</option>
+                </select>
 
-            <div class="form-group col-md-2">
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="d-flex">
+                    <div class="align-self-center mx-auto">
+                        <div class="form-group col-md-1">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="justify-content-between">
@@ -51,9 +55,24 @@
         {
             if (room.IsFree)
             {
-                <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
+                <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
                     <div class="col-md-10">
-                        <h3>No. @room.Number - @room.Type</h3>
+                        @if (room.Type == RoomType.TwoBeds)
+                        {
+                            <h4>Room No. @room.Number - Room with separate beds</h4>
+                        }
+                        else if (room.Type == RoomType.DoubleBed)
+                        {
+                            <h4>Room No. @room.Number - Room with a double bed</h4>
+                        }
+                        else if (room.Type == RoomType.PentHouse)
+                        {
+                            <h4>Room No. @room.Number - Penthouse</h4>
+                        }
+                        else
+                        {
+                            <h4>Room No. @room.Number - @room.Type</h4>
+                        }
 
                         <a class="text-muted">
                             <b>capacity:</b> @room.Capacity
@@ -61,7 +80,7 @@
                     </div>
 
                     <div class="col-md-1">
-                        <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                        <a asp-action="Details" asp-route-id="@room.Id" class="btn btn-warning my-3">Details</a>
                     </div>
                 </div>
             }

@@ -12,49 +12,49 @@
 
     <form asp-action="Edit" asp-controller="User" method="post">
         <div class="row mb-3">
-            <a class="text-muted">First name:</a>
+            <a @*class="text-muted"*@>First name</a>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Middle name:</a>
+            <a @*class="text-muted"*@>Middle name</a>
             <input asp-for="MiddleName" class="form-control" />
             <span asp-validation-for="MiddleName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Last name:</a>
+            <a @*class="text-muted"*@>Last name</a>
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">EGN:</a>
+            <a @*class="text-muted"*@>EGN</a>
             <input asp-for="EGN" class="form-control" />
             <span asp-validation-for="EGN" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Username:</a>
+            <a @*class="text-muted"*@>Username</a>
             <input asp-for="UserName" class="form-control" />
             <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Email:</a>
+            <a @*class="text-muted"*@>Email</a>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Phone number:</a>
+            <a @*class="text-muted"*@>Phone number</a>
             <input asp-for="PhoneNumber" class="form-control" />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Hire date:</a>
+            <a @*class="text-muted"*@>Hire date</a>
             <input type="date" asp-for="HireDate" class="form-control" />
             <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
@@ -62,29 +62,28 @@
         @if (!Model.IsActive)
         {
             <div class="row mb-3">
-                <a class="text-muted">Dismiss date:</a>
+                <a @*class="text-muted"*@>Dismiss date</a>
                 <input type="date" asp-for="DismissDate" class="form-control" />
                 <span asp-validation-for="DismissDate" class="text-danger"></span>
             </div>
         }
 
         <div class="row justify-content-around">
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
+            <div class="form-group col-md-2 my-auto">
+                <input type="submit" value="Update" class="mb-3 btn btn-warning my-3" />
             </div>
 
-            @if (Model.IsActive)
-            {
-                <div class="col-md-1">
+            <div class="col-md-2 my-auto">
+                @if (Model.IsActive)
+                {
                     <a asp-action="Dismiss" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
-                </div>
-            }
-            else
-            {
-                <div class="col-md-1">
+                }
+                else
+                {
                     <a asp-action="Hire" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Hire</a>
-                </div>
-            }
+
+                }
+            </div>
 
         </div>
     </form>

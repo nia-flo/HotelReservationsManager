@@ -8,65 +8,65 @@
 
 <hr class="style1 bg-warning mb-2" />
 
-<div class="col-md-4 mx-auto">
+<div class="col-md-7 mx-auto">
 
-    <h2>User:</h2>
+    <h2 class="text-center">User</h2>
     <hr />
 
-    <div class="row mb-3">
-        <a class="text-muted">First name:</a>
-        <input asp-for="User.FirstName" class="form-control" disabled />
+    <div class="col-md-6 mx-auto">
+        <div class="row mb-3">
+            <a @*class="text-muted"*@>First name</a>
+            <input asp-for="User.FirstName" class="form-control" disabled />
+        </div>
+
+        <div class="row mb-3">
+            <a @*class="text-muted"*@>First name</a>
+            <input asp-for="User.MiddleName" class="form-control" disabled />
+        </div>
+
+        <div class="row mb-3">
+            <a @*class="text-muted"*@>Last name</a>
+            <input asp-for="User.LastName" class="form-control" disabled />
+        </div>
     </div>
 
-    <div class="row mb-3">
-        <a class="text-muted">First name:</a>
-        <input asp-for="User.MiddleName" class="form-control" disabled />
-    </div>
-
-    <div class="row mb-3">
-        <a class="text-muted">Last name:</a>
-        <input asp-for="User.LastName" class="form-control" disabled />
-    </div>
-
-    <h2>Reservations:</h2>
+    <h2 class="text-center">Reservations</h2>
     <hr />
 
-    <div class="justify-content-between">
-        @foreach (var reservation in Model.Reservations)
-        {
-            <div class="d-flex row my-3 mx-2">
-                <div class="col-md-10">
-                    @if (reservation.RoomType == RoomType.TwoBeds)
-                    {
-                        <h3>Room No. @reservation.RoomNumber - Room with separate beds</h3>
-                    }
-                    else if (reservation.RoomType == RoomType.DoubleBed)
-                    {
-                        <h3>Room No. @reservation.RoomNumber - Room with a double bed</h3>
-                    }
-                    else if (reservation.RoomType == RoomType.PentHouse)
-                    {
-                        <h3>Room No. @reservation.RoomNumber - Penthouse</h3>
-                    }
-                    else
-                    {
-                        <h3>Room No. @reservation.RoomNumber - @reservation.RoomType</h3>
-                    }
+    @foreach (var reservation in Model.Reservations)
+    {
+        <div class="d-flex jumbotron px-1 py-1 row my-3 mx-2" style="background-color:#bcb2b2">
+            <div class="col-md-10">
+                @if (reservation.RoomType == RoomType.TwoBeds)
+                {
+                    <h4>Room No. @reservation.RoomNumber - Room with separate beds</h4>
+                }
+                else if (reservation.RoomType == RoomType.DoubleBed)
+                {
+                    <h4>Room No. @reservation.RoomNumber - Room with a double bed</h4>
+                }
+                else if (reservation.RoomType == RoomType.PentHouse)
+                {
+                    <h4>Room No. @reservation.RoomNumber - Penthouse</h4>
+                }
+                else
+                {
+                    <h4>Room No. @reservation.RoomNumber - @reservation.RoomType</h4>
+                }
 
-                    <a class="text-muted">
-                        <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
-                        &nbsp;
-                        <b>Price:</b> @reservation.Price
-                    </a>
-                </div>
-
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-controller="Reservation" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
-                </div>
+                <a class="text-muted">
+                    <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
+                    <br />
+                    <b>Price:</b> @reservation.Price
+                </a>
             </div>
 
+            <div class="col-md-1">
+                <a asp-action="Details" asp-controller="Reservation" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
+            </div>
+        </div>
 
-        }
-    </div>
+
+    }
 
 </div>

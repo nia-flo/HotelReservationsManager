@@ -10,22 +10,22 @@
 <div class="col-md-4 mx-auto">
 
     <div class="row mb-3">
-        <a class="text-muted">First name:</a>
+        <a @*class="text-muted"*@>First name</a>
         <input asp-for="FirstName" class="form-control" disabled />
     </div>
 
     <div class="row mb-3">
-        <a class="text-muted">Last name:</a>
+        <a @*class="text-muted"*@>Last name</a>
         <input asp-for="LastName" class="form-control" disabled />
     </div>
 
     <div class="row mb-3">
-        <a class="text-muted">Email:</a>
+        <a @*class="text-muted"*@>Email</a>
         <input asp-for="Email" class="form-control" disabled />
     </div>
 
     <div class="row mb-3">
-        <a class="text-muted">Phone number:</a>
+        <a @*class="text-muted"*@>Phone number</a>
         <input asp-for="PhoneNumber" class="form-control" disabled />
     </div>
 
@@ -41,12 +41,12 @@
         <label class="custom-control-label" for="isAdult">A child</label>
     </div>
 
-    <div class="row justify-content-around">
-        <div class="col-md-1">
+    <div class="row btn-group justify-content-around">
+        <div class="col-md-1 my-auto">
             <a asp-action="Edit" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
         </div>
 
-        <div class="col-md-1">
+        <div class="col-md-1 my-auto">
             <a asp-action="Reservations" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">View reservations</a>
         </div>
     </div>

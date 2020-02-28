@@ -11,39 +11,41 @@
 
 <br />
 
-<div class="col-md-4 mx-auto">
+<div class="col-md-7 mx-auto">
 
-    <h2>Stay details:</h2>
+    <h2 class="text-center">Stay details</h2>
     <hr />
 
-    <div class="row mb-3">
-        <a class="text-muted">Check-in date:</a>
-        <input type="date" asp-for="CheckInDate" class="form-control" disabled />
+    <div class="col-md-6 mx-auto">
+        <div class="row mb-3">
+            <a @*class="text-muted"*@>Check-in date</a>
+            <input type="date" asp-for="CheckInDate" class="form-control" disabled />
+        </div>
+
+        <div class="row mb-3">
+            <a @*class="text-muted"*@>Check-out date</a>
+            <input type="date" asp-for="CheckOutDate" class="form-control" disabled />
+        </div>
+
+        <div class="row mb-3 custom-control custom-checkbox">
+            <input asp-for="IsBreakfastIncluded" type="checkbox" class="custom-control-input" id="IsBreakfastIncluded" disabled>
+            <label class="custom-control-label" for="IsBreakfastIncluded">With included breakfast</label>
+        </div>
+
+        <div class="row mb-3 custom-control custom-checkbox">
+            <input asp-for="IsAllInclusive" type="checkbox" class="custom-control-input" id="IsAllInclusive" disabled>
+            <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
+        </div>
     </div>
 
-    <div class="row mb-3">
-        <a class="text-muted">Check-out date:</a>
-        <input type="date" asp-for="CheckOutDate" class="form-control" disabled />
-    </div>
-
-    <div class="row mb-3 custom-control custom-checkbox">
-        <input asp-for="IsBreakfastIncluded" type="checkbox" class="custom-control-input" id="IsBreakfastIncluded" disabled>
-        <label class="custom-control-label" for="IsBreakfastIncluded">With included breakfast</label>
-    </div>
-
-    <div class="row mb-3 custom-control custom-checkbox">
-        <input asp-for="IsAllInclusive" type="checkbox" class="custom-control-input" id="IsAllInclusive" disabled>
-        <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
-    </div>
-
-    <h2>Clients:</h2>
+    <h2 class="text-center">Clients</h2>
     <hr />
 
-    <div class="justify-content-between">
+    <div class="col-md-8 mx-auto">
         @foreach (var client in Model.Clients)
         {
-            <div class="d-flex row my-3 mx-2">
-                <div class="col-md-10">
+            <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
+                <div class="col-md-9">
                     <h3>@client.FirstName @client.LastName</h3>
                 </div>
 
@@ -55,55 +57,54 @@
         }
     </div>
 
-    <h2>Room:</h2>
+    <h2 class="text-center">Room</h2>
     <hr />
 
     <div class="d-flex row my-3 mx-2">
-        <div class="col-md-10">
-            @if (Model.Room.Type == RoomType.TwoBeds)
-            {
-                <h3>No. @Model.Room.Number - Room with separate beds</h3>
-            }
-            else if (Model.Room.Type == RoomType.DoubleBed)
-            {
-                <h3>No. @Model.Room.Number - Room with a double bed</h3>
-            }
-            else if (Model.Room.Type == RoomType.PentHouse)
-            {
-                <h3>No. @Model.Room.Number - Penthouse</h3>
-            }
-            else
-            {
-                <h3>No. @Model.Room.Number - @Model.Room.Type</h3>
-            }
-
-
-            <a class="text-muted">
-                <b>capacity:</b> @Model.Room.Capacity
-            </a>
-        </div>
-
-        <div class="col-md-1">
-            <a asp-action="Details" asp-route-id="@Model.Room.Id" class="mb-3 btn btn-warning my-3">Details</a>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row my-3 mx-auto">
-
-        @*<a><b>Price:</b> @Model.Price</a>*@
-        <h2>Price: &ensp;</h2>
-        <h4 class="my-auto">@Model.Price</h4>
-    </div>
-    <hr />
-
-    <h2>Creator:</h2>
-    <hr />
-
-    <div class="justify-content-between">
-        <div class="d-flex row my-3 mx-2">
+        <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
             <div class="col-md-10">
+                @if (Model.Room.Type == RoomType.TwoBeds)
+                {
+                    <h4>Room No. @Model.Room.Number - Room with separate beds</h4>
+                }
+                else if (Model.Room.Type == RoomType.DoubleBed)
+                {
+                    <h4>Room No. @Model.Room.Number - Room with a double bed</h4>
+                }
+                else if (Model.Room.Type == RoomType.PentHouse)
+                {
+                    <h4>Room No. @Model.Room.Number - Penthouse</h4>
+                }
+                else
+                {
+                    <h4>Room No. @Model.Room.Number - @Model.Room.Type</h4>
+                }
+
+                <a class="text-muted">
+                    <b>capacity:</b> @Model.Room.Capacity
+                </a>
+            </div>
+
+            <div class="col-md-1">
+                <a asp-action="Details" asp-controller="Room" asp-route-id="@Model.Room.Id" class="btn btn-warning my-3">Details</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2 class="col-md-5 my-auto mr-3 text-right">Price</h2>
+        <h2 class="col-md-1 my-auto text-center">-</h2>
+        <h4 class="col-md-5 my-auto ml-3 text-left">@Model.Price</h4>
+    </div>
+
+    <hr />
+
+    <h2 class="text-center">Creator</h2>
+    <hr />
+
+    <div class="col-md-8 mx-auto">
+        <div class="d-flex jumbotron py-1 px-1 my-3 mx-2 mx-auto" style="background-color:#bcb2b2">
+            <div class="col-md-9">
                 <h3>@Model.Creator.FirstName @Model.Creator.LastName</h3>
             </div>
 
@@ -113,9 +114,10 @@
         </div>
     </div>
 
-
-    <div class="col-md-1">
-        <a asp-action="Edit" asp-controller="Reservation" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+    <div class="d-flex">
+        <div class="align-self-center mx-auto">
+            <a asp-action="Edit" asp-controller="Reservation" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+        </div>
     </div>
 
 </div>

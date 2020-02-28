@@ -18,13 +18,13 @@
         <hr />
 
         <div class="row mb-3">
-            <a class="text-muted">Check-in date:</a>
+            <a @*class="text-muted"*@>Check-in date</a>
             <input type="date" asp-for="CheckInDate" class="form-control" />
             <span asp-validation-for="CheckInDate" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
-            <a class="text-muted">Check-out date:</a>
+            <a @*class="text-muted"*@>Check-out date</a>
             <input type="date" asp-for="CheckOutDate" class="form-control" />
             <span asp-validation-for="CheckOutDate" class="text-danger"></span>
         </div>
@@ -79,9 +79,12 @@
         </select>
         <span asp-validation-for="ChoosenRoom" class="text-danger"></span>
 
-
-        <div class="form-group">
-            <input type="submit" value="Next" class="btn btn-primary" />
+        <div class="d-flex">
+            <div class="align-self-center mx-auto">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
     </form>
 
