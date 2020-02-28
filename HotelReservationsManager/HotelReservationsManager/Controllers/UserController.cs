@@ -218,7 +218,7 @@ namespace HotelReservationsManager.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.DismissDate = model.DismissDate;
                 user.HireDate = model.HireDate;
-                user.IsActive = model.IsActive;
+                //user.IsActive = model.IsActive;
 
                 context.Update(user);
                 context.SaveChanges();

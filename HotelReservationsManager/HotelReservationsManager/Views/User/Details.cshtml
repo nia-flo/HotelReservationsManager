@@ -72,19 +72,6 @@
             <a asp-action="Edit" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
         </div>
 
-        @if (Model.IsActive)
-        {
-            <div class="col-md-1">
-                <a asp-action="Dismiss" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
-            </div>
-        }
-        else
-        {
-            <div class="col-md-1">
-                <a asp-action="Hire" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Hire</a>
-            </div>
-        }
-
     </div>
 
 </div>
