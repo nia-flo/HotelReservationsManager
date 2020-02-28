@@ -115,6 +115,30 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
 
+            if (_context.Users.FirstOrDefault(u => u.UserName == Input.Username) != null)
+            {
+                ModelState.AddModelError("Input.Username", "There is an user with this username.");
+                //return Page();
+            }
+
+            if (_context.Users.FirstOrDefault(u => u.EGN == Input.EGN) != null)
+            {
+                ModelState.AddModelError("Input.EGN", "There is an user with this EGN.");
+                //return Page();
+            }
+
+            if (_context.Users.FirstOrDefault(u => u.PhoneNumber == Input.PhoneNumber) != null)
+            {
+                ModelState.AddModelError("Input.PhoneNumber", "There is an user with this phone number.");
+                //return Page();
+            }
+
+            if (_context.Users.FirstOrDefault(u => u.Email == Input.Email) != null)
+            {
+                ModelState.AddModelError("Input.Email", "There is an user with this email.");
+                //return Page();
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new User

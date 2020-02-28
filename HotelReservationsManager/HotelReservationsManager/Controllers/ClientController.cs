@@ -27,20 +27,37 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Create(ClientCreateViewModel model)
         {
-            Client client = new Client()
+            if (context.Clients.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber) != null)
             {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
-                IsAdult = !model.IsAdult
-            };
+                ModelState.AddModelError("PhoneNumber", "There is an user with this phone number.");
+                //return Page();
+            }
 
-            context.Clients.AddAsync(client);
-            context.SaveChanges();
+            if (context.Clients.FirstOrDefault(u => u.Email == model.Email) != null)
+            {
+                ModelState.AddModelError("Email", "There is an user with this email.");
+                //return Page();
+            }
 
-            return Redirect("~/Client/Details/" + client.Id);
+            if (ModelState.IsValid)
+            {
+                Client client = new Client()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    Email = model.Email,
+                    IsAdult = !model.IsAdult
+                };
+
+                context.Clients.AddAsync(client);
+                context.SaveChanges();
+
+                return Redirect("~/Client/Details/" + client.Id);
+            }
+
+            return View(model);
         }
 
         public IActionResult Details(string id)
@@ -81,18 +98,37 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Edit(ClientEditViewModel model)
         {
-            Client client = context.Clients.FindAsync(model.Id).Result;
+            Client samePhoneNumber = context.Clients.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber);
+            if (samePhoneNumber != null && samePhoneNumber.Id != model.Id)
+            {
+                ModelState.AddModelError("PhoneNumber", "There is an user with this phone number.");
+                //return Page();
+            }
 
-            client.FirstName = model.FirstName;
-            client.LastName = model.LastName;
-            client.PhoneNumber = model.PhoneNumber;
-            client.Email = model.Email;
-            client.IsAdult = !model.IsAdult;
+            Client sameEmail = context.Clients.FirstOrDefault(u => u.Email == model.Email);
+            if (sameEmail != null && sameEmail.Id != model.Id)
+            {
+                ModelState.AddModelError("Email", "There is an user with this email.");
+                //return Page();
+            }
 
-            context.Clients.Update(client);
-            context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                Client client = context.Clients.FindAsync(model.Id).Result;
 
-            return Redirect("~/Client/Details/" + client.Id);
+                client.FirstName = model.FirstName;
+                client.LastName = model.LastName;
+                client.PhoneNumber = model.PhoneNumber;
+                client.Email = model.Email;
+                client.IsAdult = !model.IsAdult;
+
+                context.Clients.Update(client);
+                context.SaveChanges();
+
+                return Redirect("~/Client/Details/" + client.Id);
+            }
+
+            return View(model);
         }
 
         public IActionResult Search(ClientSearchViewModel model)

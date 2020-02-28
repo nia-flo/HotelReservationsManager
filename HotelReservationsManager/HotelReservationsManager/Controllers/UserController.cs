@@ -205,6 +205,32 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Edit(EditUserViewModel model)
         {
+            User sameUserName = context.Users.FirstOrDefault(u => u.UserName == model.UserName);
+            if (sameUserName != null && sameUserName.Id != model.Id)
+            {
+                ModelState.AddModelError("UserName", "There is an user with this username.");
+                //return Page();
+            }
+
+            User sameEGN = context.Users.FirstOrDefault(u => u.EGN == model.EGN);
+            if (sameEGN != null && sameEGN.Id != model.Id)
+            {
+                ModelState.AddModelError("EGN", "There is an user with this EGN.");
+                //return Page();
+            }
+
+            User samePhoneNumber = context.Users.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber);
+            if (samePhoneNumber != null && samePhoneNumber.Id != model.Id)
+            {
+                ModelState.AddModelError("PhoneNumber", "There is an user with this phone number.");
+                //return Page();
+            }
+
+            if (context.Users.FirstOrDefault(u => u.Email == model.Email) != null)
+            {
+                ModelState.AddModelError("Email", "There is an user with this email.");
+                //return Page();
+            }
             if (ModelState.IsValid)
             {
                 User user = context.Users.First(u => u.Id == model.Id);
