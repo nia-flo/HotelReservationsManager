@@ -57,6 +57,16 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Create(ReservationCreateViewModel model)
         {
+            if (model.CheckInDate < DateTime.Now)
+            {
+                ModelState.AddModelError("CheckInDate", "Check-in date cannot be in the past.");
+            }
+
+            if (model.CheckOutDate < DateTime.Now)
+            {
+                ModelState.AddModelError("CheckOutDate", "Check-out date cannot be in the past.");
+            }
+
             if (ModelState.IsValid)
             {
                 foreach (var previousReservation in context.Reservations)
@@ -67,8 +77,7 @@ namespace HotelReservationsManager.Controllers
                             (previousReservation.CheckInDate < model.CheckOutDate
                             && model.CheckInDate <= previousReservation.CheckOutDate)))
                     {
-                        return Redirect("~/Reservation/RoomNotFree");
-                        //ModelState.AddModelError("ChoosenRoom", "There is already created room with this number.");
+                        return Redirect("~/Reservation/RoomNotFree");;
                     }
                 }
 

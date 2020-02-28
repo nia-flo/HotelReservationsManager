@@ -209,30 +209,34 @@ namespace HotelReservationsManager.Controllers
             if (sameUserName != null && sameUserName.Id != model.Id)
             {
                 ModelState.AddModelError("UserName", "There is an user with this username.");
-                //return Page();
             }
 
             User sameEGN = context.Users.FirstOrDefault(u => u.EGN == model.EGN);
             if (sameEGN != null && sameEGN.Id != model.Id)
             {
                 ModelState.AddModelError("EGN", "There is an user with this EGN.");
-                //return Page();
             }
 
             User samePhoneNumber = context.Users.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber);
             if (samePhoneNumber != null && samePhoneNumber.Id != model.Id)
             {
                 ModelState.AddModelError("PhoneNumber", "There is an user with this phone number.");
-                //return Page();
             }
 
             if (context.Users.FirstOrDefault(u => u.Email == model.Email) != null)
             {
                 ModelState.AddModelError("Email", "There is an user with this email.");
-                //return Page();
             }
 
+            if (model.HireDate > DateTime.Now)
+            {
+                ModelState.AddModelError("HireDate", "Hire date cannot be in the future.");
+            }
 
+            if (model.DismissDate > DateTime.Now)
+            {
+                ModelState.AddModelError("DismissDate", "Dismiss date cannot be in the future.");
+            }
 
             if (ModelState.IsValid)
             {
