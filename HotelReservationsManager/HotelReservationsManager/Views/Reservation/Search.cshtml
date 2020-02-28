@@ -16,7 +16,7 @@
         <form asp-action="Search" asp-controller="Reservation" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
-                <option value="default" selected disabled>--- Select a search criteria ---</option>
+                <option id="default" value="default" selected disabled>--- Select a search criteria ---</option>
                 <option value="RoomType">Room type</option>
                 <option value="RoomNumber">RoomNumber</option>
             </select>

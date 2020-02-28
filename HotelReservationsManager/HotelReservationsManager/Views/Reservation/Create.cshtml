@@ -18,11 +18,13 @@
         <div class="row mb-3">
             <a class="text-muted">Check-in date:</a>
             <input type="date" asp-for="CheckInDate" class="form-control" />
+            <span asp-validation-for="CheckInDate" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Check-out date:</a>
             <input type="date" asp-for="CheckOutDate" class="form-control" />
+            <span asp-validation-for="CheckOutDate" class="text-danger"></span>
         </div>
 
         <div class="row mb-3 custom-control custom-checkbox">
@@ -45,6 +47,7 @@
                 <option value="@client.Id">@client.FirstName @client.LastName</option>
             }
         </select>
+        <span asp-validation-for="ChoosenClients" class="text-danger"></span>
 
         <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom">
             <option selected disabled>--- Select a room ---</option>
@@ -66,9 +69,10 @@
                 {
                     <h3>No. @room.Number - @room.Type</h3>
                 }
-                <option value="@room.Id">No. @room.Number - @room.Type </option>
+                <option value="@room.Id">No. @room.Number - @room.Type - max @room.Capacity people </option>
             }
         </select>
+        <span asp-validation-for="ChoosenRoom" class="text-danger"></span>
 
 
         <div class="form-group">

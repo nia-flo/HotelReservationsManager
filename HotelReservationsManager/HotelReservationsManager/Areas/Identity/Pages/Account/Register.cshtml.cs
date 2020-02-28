@@ -32,7 +32,7 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
             //SignInManager<User> signInManager,
             //ILogger<RegisterModel> logger,
             DbContext context)
-           // IEmailSender emailSender)
+        // IEmailSender emailSender)
         {
             _userManager = userManager;
             //_signInManager = signInManager;
@@ -53,44 +53,49 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Username")]
+            [RegularExpression("^[a-zA-Z0-9.-]*$", ErrorMessage = "Only letters, numbers, periods and dashes allowed.")]
             public string Username { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only letters and numbers allowed.")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirm password")]
             public string ConfirmPassword { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [RegularExpression("^[a-zA-Z-]*$", ErrorMessage = "Only letters and dashes allowed.")]
             [Display(Name = "First name")]
             public string FirstName { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [RegularExpression("^[a-zA-Z-]*$", ErrorMessage = "Only letters and dashes allowed.")]
             [Display(Name = "Middle name")]
             public string MiddleName { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [RegularExpression("^[a-zA-Z-]*$", ErrorMessage = "Only letters and dashes allowed.")]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
 
             [Required]
-            [RegularExpression(@"^[0-9]*$")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Only numbers allowed.")]
             [StringLength(10, MinimumLength = 10, ErrorMessage = "The {0} must be 10 characters")]
             [Display(Name = "EGN")]
             public string EGN { get; set; }
 
             [Required]
             //[Phone]
-            [RegularExpression(@"^[0-9]*$")]
+            [RegularExpression(@"^[0-9]*$", ErrorMessage = "Only numbers allowed.")]
             [StringLength(10, MinimumLength = 10, ErrorMessage = "The {0} must be 10 characters")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -108,10 +113,12 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            //returnUrl = returnUrl ?? Url.Content("~/");
+
             if (ModelState.IsValid)
             {
-                var user = new User {
+                var user = new User
+                {
                     Id = Guid.NewGuid().ToString(),
                     UserName = Input.Username,
                     FirstName = Input.FirstName,
@@ -140,7 +147,8 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
                     }
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Redirect("~/User/Employees");
+
+                    return Redirect("~/User/UserDetails/" + user.Id);
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -166,7 +174,14 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code == "PasswordRequiresDigit")
+                    {
+                        ModelState.AddModelError("Password", error.Description);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 

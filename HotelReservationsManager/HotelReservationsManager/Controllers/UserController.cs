@@ -247,8 +247,8 @@ namespace HotelReservationsManager.Controllers
                 context.Update(user);
                 context.SaveChanges();
 
-                //return Redirect("~/User/UserDetails/" + model.Id);
-                return Redirect("~/");
+                return Redirect("~/User/UserDetails/" + model.Id);
+                //return Redirect("~/");
             }
 
             return View(model);
@@ -264,8 +264,8 @@ namespace HotelReservationsManager.Controllers
             context.Update(user);
             context.SaveChanges();
 
-            //return Redirect("~/User/UserDetails/" + model.Id);
-            return Redirect("~/User/Employees");
+            return Redirect("~/User/UserDetails/" + user.Id);
+            //return Redirect("~/User/Employees");
         }
 
         public IActionResult Dismiss(string id)
@@ -278,8 +278,8 @@ namespace HotelReservationsManager.Controllers
             context.Update(user);
             context.SaveChanges();
 
-            //return Redirect("~/User/UserDetails/" + model.Id);
-            return Redirect("~/User/Employees");
+            return Redirect("~/User/UserDetails/" + user.Id);
+            //return Redirect("~/User/Employees");
         }
     }
 }

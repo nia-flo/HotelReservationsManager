@@ -31,7 +31,12 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Create(RoomCreateViewModel model)
         {
-            if (ModelState.IsValid && context.Rooms.FirstOrDefault(r => r.Number == model.Number) == null)
+            if (context.Rooms.FirstOrDefault(r => r.Number == model.Number) != null)
+            {
+                ModelState.AddModelError("Number", "There is already created room with this number.");
+            }
+
+            if (ModelState.IsValid)
             {
                 Room room = new Room()
                 {
@@ -93,19 +98,31 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Edit(RoomEditViewModel model)
         {
+
             Room room = context.Rooms.FindAsync(model.Id).Result;
 
-            room.Capacity = model.Capacity;
-            room.Type = model.Type;
-            room.AdultPrice = model.AdultPrice;
-            room.ChildPrice = model.ChildPrice;
-            room.Number = model.Number;
-            room.IsFree = model.IsFree;
+            if (room.Number != model.Number && context.Rooms.First(r => r.Number == model.Number) != null)
+            {
+                    ModelState.AddModelError("Number", "There is already created room with this number.");
 
-            context.Update(room);
-            context.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
 
-            return Redirect("~/Room/Details/" + room.Id);
+                room.Capacity = model.Capacity;
+                room.Type = model.Type;
+                room.AdultPrice = model.AdultPrice;
+                room.ChildPrice = model.ChildPrice;
+                room.Number = model.Number;
+                room.IsFree = model.IsFree;
+
+                context.Update(room);
+                context.SaveChanges();
+
+                return Redirect("~/Room/Details/" + room.Id);
+            }
+
+            return View();
         }
 
         public IActionResult Search(RoomSearchViewModel model)

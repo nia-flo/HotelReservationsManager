@@ -57,49 +57,71 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Create(ReservationCreateViewModel model)
         {
-
-            foreach (var previousReservation in context.Reservations)
+            if (ModelState.IsValid)
             {
-                if (previousReservation.Room.Id == model.ChoosenRoom
-                    && ((previousReservation.CheckInDate <= model.CheckInDate
-                        && model.CheckInDate < previousReservation.CheckOutDate) ||
-                        (previousReservation.CheckInDate < model.CheckOutDate
-                        && model.CheckInDate <= previousReservation.CheckOutDate)))
+                foreach (var previousReservation in context.Reservations)
                 {
-                    return Redirect("~/Reservation/RoomNotFree");
+                    if (previousReservation.Room.Id == model.ChoosenRoom
+                        && ((previousReservation.CheckInDate <= model.CheckInDate
+                            && model.CheckInDate < previousReservation.CheckOutDate) ||
+                            (previousReservation.CheckInDate < model.CheckOutDate
+                            && model.CheckInDate <= previousReservation.CheckOutDate)))
+                    {
+                        return Redirect("~/Reservation/RoomNotFree");
+                        //ModelState.AddModelError("ChoosenRoom", "There is already created room with this number.");
+                    }
                 }
+
+                Room room = context.Rooms.Find(model.ChoosenRoom);
+
+                if (model.ChoosenClients.Count > room.Capacity)
+                {
+                    return Redirect("~/Reservation/TooManyPeople");
+                }
+
+                User creator = context.Users.Find(userManager.GetUserId(User));
+
+                Reservation reservation = new Reservation(room, creator, new List<ClientReservation>(), model.CheckInDate, model.CheckOutDate, model.IsBreakfastIncluded, model.IsAllInclusive, 0);
+
+                reservation.ClientReservations = model.ChoosenClients.Select(c => context.Clients.Find(c))
+                    .Select(c => new ClientReservation(c.Id, c, reservation.Id, reservation)).ToList();
+
+                foreach (var client in reservation.ClientReservations.Select(cr => cr.Client))
+                {
+                    if (client.IsAdult)
+                    {
+                        reservation.Price += reservation.Room.AdultPrice;
+                    }
+                    else
+                    {
+                        reservation.Price += reservation.Room.ChildPrice;
+                    }
+                }
+
+                context.Reservations.Add(reservation);
+                context.SaveChanges();
+
+                return Redirect("~/Reservation/Details/" + reservation.Id);
             }
 
-            Room room = context.Rooms.Find(model.ChoosenRoom);
-
-            if (model.ChoosenClients.Count > room.Capacity)
+            model.Clients = context.Clients.Select(c => new ClientViewModel()
             {
-                return Redirect("~/Reservation/TooManyPeople");
-            }
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                Id = c.Id,
+                IsAdult = c.IsAdult
+            }).ToList();
 
-            User creator = context.Users.Find(userManager.GetUserId(User));
-
-            Reservation reservation = new Reservation(room, creator, new List<ClientReservation>(), model.CheckInDate, model.CheckOutDate, model.IsBreakfastIncluded, model.IsAllInclusive, 0);
-
-            reservation.ClientReservations = model.ChoosenClients.Select(c => context.Clients.Find(c))
-                .Select(c => new ClientReservation(c.Id, c, reservation.Id, reservation)).ToList();
-
-            foreach (var client in reservation.ClientReservations.Select(cr => cr.Client))
+            model.Rooms = context.Rooms.Select(r => new RoomViewModel()
             {
-                if (client.IsAdult)
-                {
-                    reservation.Price += reservation.Room.AdultPrice;
-                }
-                else
-                {
-                    reservation.Price += reservation.Room.ChildPrice;
-                }
-            }
+                Id = r.Id,
+                Capacity = r.Capacity,
+                Type = r.Type,
+                Number = r.Number
 
-            context.Reservations.Add(reservation);
-            context.SaveChanges();
+            }).ToList();
 
-            return Redirect("~/Reservation/Details/" + reservation.Id);
+            return View(model);
         }
 
         public IActionResult RoomNotFree()
@@ -172,15 +194,15 @@ namespace HotelReservationsManager.Controllers
                                     u.CheckOutDate, u.Price))
                                .ToList();
             }
-
-            model.SearchBy = "default";
-
-            model.Reservations = context.Reservations
-                               .OrderBy(u => u.Room.Number)
-                               .ThenBy(u => u.Room.Type)
-                               .Select(u => new ReservationViewModel(u.Id, u.Room.Number, u.Room.Type, u.CheckInDate,
-                                    u.CheckOutDate, u.Price))
-                               .ToList();
+            else
+            {
+                model.Reservations = context.Reservations
+                                               .OrderBy(u => u.Room.Number)
+                                               .ThenBy(u => u.Room.Type)
+                                               .Select(u => new ReservationViewModel(u.Id, u.Room.Number, u.Room.Type, u.CheckInDate,
+                                                    u.CheckOutDate, u.Price))
+                                               .ToList();
+            }
 
             return View(model);
         }
