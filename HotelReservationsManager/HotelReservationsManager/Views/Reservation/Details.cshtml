@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    <a asp-action="Details" asp-controller="Client" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
                 </div>
             </div>
 
@@ -89,9 +89,29 @@
     </div>
 
     <hr />
-    <a>
-        <b>Price:</b> @Model.Price
-    </a>
+
+    <div class="row my-3 mx-auto">
+
+        @*<a><b>Price:</b> @Model.Price</a>*@
+        <h2>Price: &ensp;</h2>
+        <h4 class="my-auto">@Model.Price</h4>
+    </div>
+    <hr />
+
+    <h2>Creator:</h2>
+    <hr />
+
+    <div class="justify-content-between">
+        <div class="d-flex row my-3 mx-2">
+            <div class="col-md-10">
+                <h3>@Model.Creator.FirstName @Model.Creator.LastName</h3>
+            </div>
+
+            <div class="col-md-1">
+                <a asp-action="Details" asp-controller="User" asp-route-id="@Model.Creator.Id" class="mb-3 btn btn-warning my-3">Details</a>
+            </div>
+        </div>
+    </div>
 
 
     <div class="col-md-1">

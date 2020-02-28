@@ -1,8 +1,10 @@
 ﻿using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
 using HotelReservationsManager.Models.ClientViewModels;
+using HotelReservationsManager.Models.ReservationViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HotelReservationsManager.Controllers
@@ -141,6 +143,23 @@ namespace HotelReservationsManager.Controllers
                                })
                                .ToList();
             }
+
+            return View(model);
+        }
+
+        public IActionResult Reservations(string id)
+        {
+            Client client = context.Clients.Find(id);
+
+            ClientViewModel clientViewModel = new ClientViewModel(client.Id, client.FirstName, client.LastName,
+                client.IsAdult);
+
+            List<ReservationViewModel> reservations = context.ClientReservation.Where(cl => cl.Client.Id == id)
+                .Select(r => new ReservationViewModel(r.Reservation.Id, r.Reservation.Room.Number,
+                    r.Reservation.Room.Type, r.Reservation.CheckInDate, r.Reservation.CheckOutDate, r.Reservation.Price))
+                .ToList();
+
+            ClientReservationsViewModel model = new ClientReservationsViewModel(clientViewModel, reservations);
 
             return View(model);
         }

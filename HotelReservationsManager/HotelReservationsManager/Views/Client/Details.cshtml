@@ -40,8 +40,14 @@
         <label class="custom-control-label" for="isAdult">A child</label>
     </div>
 
-    <div class="col-md-1">
-        <a asp-action="Edit" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
-    </div>
+    <div class="row justify-content-around">
+        <div class="col-md-1">
+            <a asp-action="Edit" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
+        </div>
 
+        <div class="col-md-1">
+            <a asp-action="Reservations" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">View reservations</a>
+        </div>
+    </div>
+    
 </div>

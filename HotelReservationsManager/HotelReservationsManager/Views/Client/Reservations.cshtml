@@ -1,0 +1,67 @@
+﻿@using HotelReservationsManager.Data.Models.Enums
+@model HotelReservationsManager.Models.ClientViewModels.ClientReservationsViewModel
+@{
+    ViewData["Title"] = "Client reservations";
+}
+
+<h1 class="text-center">Client reservations</h1>
+
+<hr class="style1 bg-warning mb-2" />
+
+<div class="col-md-4">
+
+    <h2>Client:</h2>
+    <hr />
+
+    <div class="row mb-3">
+        <a class="text-muted">First name:</a>
+        <input asp-for="Client.FirstName" class="form-control" disabled />
+    </div>
+
+    <div class="row mb-3">
+        <a class="text-muted">Last name:</a>
+        <input asp-for="Client.LastName" class="form-control" disabled />
+    </div>
+
+    <h2>Reservations:</h2>
+    <hr />
+
+    <div class="justify-content-between">
+        @foreach (var reservation in Model.Reservations)
+        {
+            <div class="d-flex row my-3 mx-2">
+                <div class="col-md-10">
+                    @if (reservation.RoomType == RoomType.TwoBeds)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Room with separate beds</h3>
+                    }
+                    else if (reservation.RoomType == RoomType.DoubleBed)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Room with a double bed</h3>
+                    }
+                    else if (reservation.RoomType == RoomType.PentHouse)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Penthouse</h3>
+                    }
+                    else
+                    {
+                        <h3>Room No. @reservation.RoomNumber - @reservation.RoomType</h3>
+                    }
+
+                    <a class="text-muted">
+                        <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
+                        &nbsp;
+                        <b>Price:</b> @reservation.Price
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-controller="Reservation" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
+            </div>
+
+
+        }
+    </div>
+
+</div>

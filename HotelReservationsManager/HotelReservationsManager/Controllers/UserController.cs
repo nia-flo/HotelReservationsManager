@@ -18,31 +18,7 @@ namespace HotelReservationsManager.Controllers
             this.context = context;
         }
 
-        public IActionResult Employees()
-        {
-            List<UserViewModel> employees = 
-                context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId == 
-                                            context.Roles.First(r => r.Name == "Employee").Id)
-                             .ToList()
-                             .OrderBy(u => u.FirstName)
-                             .ThenBy(u => u.MiddleName)
-                             .ThenBy(u => u.LastName)
-                             .Select(u => new UserViewModel()
-                             {
-                                 Id = u.Id,
-                                 UserName = u.UserName,
-                                 Email = u.Email,
-                                 FirstName = u.FirstName,
-                                 MiddleName = u.MiddleName,
-                                 LastName = u.LastName,
-                                 IsActive = u.IsActive
-                             })
-                             .ToList();
-           
-            return View(employees);
-        }
-
-        public IActionResult SearchEmployees(SearchEmployeesViewModel model)
+        public IActionResult Search(SearchEmployeesViewModel model)
         {
             if (model.SearchBy == "Username")
             {
@@ -178,7 +154,7 @@ namespace HotelReservationsManager.Controllers
             return View(model);
         }
 
-        public IActionResult UserDetails(string id)
+        public IActionResult Details(string id)
         {
             User user = context.Users.First(u => u.Id == id);
 
@@ -202,7 +178,7 @@ namespace HotelReservationsManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUser(string id)
+        public IActionResult Edit(string id)
         {
             User user = context.Users.First(u => u.Id == id);
 
@@ -226,7 +202,7 @@ namespace HotelReservationsManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(EditUserViewModel model)
+        public IActionResult Edit(EditUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -247,7 +223,7 @@ namespace HotelReservationsManager.Controllers
                 context.Update(user);
                 context.SaveChanges();
 
-                return Redirect("~/User/UserDetails/" + model.Id);
+                return Redirect("~/User/Details/" + model.Id);
                 //return Redirect("~/");
             }
 
@@ -264,7 +240,7 @@ namespace HotelReservationsManager.Controllers
             context.Update(user);
             context.SaveChanges();
 
-            return Redirect("~/User/UserDetails/" + user.Id);
+            return Redirect("~/User/Details/" + user.Id);
             //return Redirect("~/User/Employees");
         }
 
@@ -278,7 +254,7 @@ namespace HotelReservationsManager.Controllers
             context.Update(user);
             context.SaveChanges();
 
-            return Redirect("~/User/UserDetails/" + user.Id);
+            return Redirect("~/User/Details/" + user.Id);
             //return Redirect("~/User/Employees");
         }
     }
