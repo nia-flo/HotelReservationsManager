@@ -31,11 +31,11 @@
     <div class="row mb-3 custom-control custom-checkbox">
         @if (Model.IsAdult)
         {
-            <input asp-for="IsAdult" type="checkbox" class="custom-control-input" id="isAdult" disabled>
+            <input type="checkbox" class="custom-control-input" id="isAdult" disabled>
         }
         else
         {
-            <input asp-for="IsAdult" type="checkbox" class="custom-control-input" id="isAdult" checked disabled>
+            <input type="checkbox" class="custom-control-input" id="isAdult" checked disabled>
         }
         <label class="custom-control-label" for="isAdult">A child</label>
     </div>

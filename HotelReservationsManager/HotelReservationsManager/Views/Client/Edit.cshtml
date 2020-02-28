@@ -7,27 +7,31 @@
 
 <hr />
 
-<div class="col-md-4">
+<div class="col-md-4 mx-auto">
 
     <form asp-action="Edit" asp-controller="Client" method="post">
         <div class="row mb-3">
             <a class="text-muted">First name:</a>
             <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Last name:</a>
             <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Email:</a>
             <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="row mb-3">
             <a class="text-muted">Phone number:</a>
             <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
 
         <div class="row mb-3 custom-control custom-checkbox">

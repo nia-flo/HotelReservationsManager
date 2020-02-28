@@ -106,7 +106,8 @@ namespace HotelReservationsManager.Controllers
                                {
                                    Id = u.Id,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName
+                                   LastName = u.LastName,
+                                   IsAdult = u.IsAdult
                                })
                                .ToList();
             }
@@ -121,7 +122,8 @@ namespace HotelReservationsManager.Controllers
                                {
                                    Id = u.Id,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName
+                                   LastName = u.LastName,
+                                   IsAdult = u.IsAdult
                                })
                                .ToList();
             }
@@ -134,7 +136,8 @@ namespace HotelReservationsManager.Controllers
                                {
                                    Id = u.Id,
                                    FirstName = u.FirstName,
-                                   LastName = u.LastName
+                                   LastName = u.LastName,
+                                   IsAdult = u.IsAdult
                                })
                                .ToList();
             }

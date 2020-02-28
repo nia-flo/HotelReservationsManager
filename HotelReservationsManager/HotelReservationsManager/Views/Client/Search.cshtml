@@ -38,16 +38,33 @@
 <div class="justify-content-between">
     @foreach (var client in Model.Clients)
     {
-            <div class="d-flex row my-3 mx-2">
-                <div class="col-md-10">
-                    <h3>@client.FirstName @client.LastName</h3>
-                </div>
+        <div class="d-flex row my-3 mx-2">
+            <div class="col-md-10">
+                <h3>@client.FirstName @client.LastName</h3>
 
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
-                </div>
+                @if (client.IsAdult)
+                {
+                    <a class="text-muted">
+                        <b>Adult</b>
+                    </a>
+                }
+                else
+                {
+                    <a class="text-muted">
+                        <b>Child</b>
+                    </a>
+                }
+
             </div>
-        
+
+
+            <div class="col-md-1">
+                <a asp-action="Details" asp-route-id="@client.Id" class="mb-3 btn btn-warning my-3">Details</a>
+            </div>
+        </div>
+
+        <hr />
+
     }
 </div>
 
