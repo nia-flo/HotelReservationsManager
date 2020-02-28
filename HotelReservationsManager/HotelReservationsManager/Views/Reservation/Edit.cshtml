@@ -1,18 +1,18 @@
 ﻿@using HotelReservationsManager.Data.Models.Enums
-@model HotelReservationsManager.Models.ReservationViewModels.ReservationCreateViewModel
+@model HotelReservationsManager.Models.ReservationViewModels.ReservationEditViewModel
 @{
-    ViewData["Title"] = "Create Reservation";
+    ViewData["Title"] = "Edit reservation";
 }
 
 
-<h1>Create reservation</h1>
+<h1>Edit reservation</h1>
 
 <hr class="style1 bg-warning mb-2" />
 
 <br />
 
 <div class="col-md-4">
-    <form asp-action="Create" asp-controller="Reservation" method="post">
+    <form asp-action="Edit" asp-controller="Reservation" method="post">
         <h2>Choose stay options</h2>
         <hr />
 
@@ -36,13 +36,10 @@
         <div class="row mb-3 custom-control custom-checkbox">
             <input asp-for="IsAllInclusive" type="checkbox" class="custom-control-input" id="IsAllInclusive">
             <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
-        </div>
-
-        <h2>Choose clients</h2>
-        <hr />
+        </div>c
 
         <select class="custom-select mb-3" name="ChoosenClients" asp-for="ChoosenClients" multiple>
-            <option selected disabled>--- Select clients ---</option>
+            <option disabled>--- Select clients ---</option>
             @foreach (var client in Model.Clients)
             {
                 <option value="@client.Id">@client.FirstName @client.LastName</option>
@@ -54,7 +51,7 @@
         <hr />
 
         <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom">
-            <option selected disabled>--- Select a room ---</option>
+            <option disabled>--- Select a room ---</option>
             @foreach (var room in Model.Rooms)
             {
                 @if (room.Type == RoomType.TwoBeds)
