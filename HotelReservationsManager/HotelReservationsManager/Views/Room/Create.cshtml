@@ -1,11 +1,11 @@
 ﻿@model HotelReservationsManager.Models.RoomCreateViewModel
 @{
-    ViewData["Title"] = "Create Room";
+    ViewData["Title"] = "Create room";
 }
 
-<h1>Create Room</h1>
+<h1 class="text-center">Create room</h1>
 
-<hr />
+<hr class="style1 bg-warning mb-2" />
 
 <div class="col-md-4">
     <form asp-action="Create" asp-controller="Room" method="post">
@@ -44,9 +44,9 @@
             <span asp-validation-for="Number" class="text-danger"></span>
         </div>
 
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
     </form>
 
 </div>
