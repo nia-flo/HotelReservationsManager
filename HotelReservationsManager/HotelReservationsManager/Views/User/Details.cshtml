@@ -8,7 +8,8 @@
 
 <hr class="style1 bg-warning mb-2" />
 
-<div class="col-md-4">
+<div class="col-md-4 mx-auto">
+
     <div class="row mb-3">
         <a class="text-muted">First name:</a>
         <input asp-for="FirstName" class="form-control" disabled />
@@ -67,7 +68,7 @@
         </div>
     }
 
-    <div class="row justify-content-around">
+    <div class="row btn-group justify-content-around">
         <div class="col-md-1">
             <a asp-action="Edit" asp-controller="@Model.Id" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
         </div>

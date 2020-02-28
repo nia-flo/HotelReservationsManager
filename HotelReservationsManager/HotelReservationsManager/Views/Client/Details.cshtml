@@ -7,7 +7,8 @@
 
 <hr class="style1 bg-warning mb-2" />
 
-<div class="col-md-4">
+<div class="col-md-4 mx-auto">
+
     <div class="row mb-3">
         <a class="text-muted">First name:</a>
         <input asp-for="FirstName" class="form-control" disabled />
@@ -49,5 +50,5 @@
             <a asp-action="Reservations" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">View reservations</a>
         </div>
     </div>
-    
+
 </div>

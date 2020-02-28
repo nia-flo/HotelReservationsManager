@@ -172,7 +172,7 @@ namespace HotelReservationsManager.Areas.Identity.Pages.Account
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return Redirect("~/User/UserDetails/" + user.Id);
+                    return Redirect("~/User/Details/" + user.Id);
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

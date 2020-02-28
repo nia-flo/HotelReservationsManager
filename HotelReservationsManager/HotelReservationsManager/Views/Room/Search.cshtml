@@ -11,9 +11,8 @@
 
 <a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Room">Create new Room</a>
 
-
-<div class="row">
-    <div class="col-md-4">
+<div class="col-md-4 mx-auto">
+    <div class="row">
         <form asp-action="Search" asp-controller="Room" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
@@ -41,66 +40,66 @@
                 <option value="Occupated">Occupated</option>
             </select>
 
-            <div class="form-group col-md2">
+            <div class="form-group col-md-2">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
 
-<div class="justify-content-between">
-    @foreach (var room in Model.Rooms)
-    {
-        if (room.IsFree)
+    <div class="justify-content-between">
+        @foreach (var room in Model.Rooms)
         {
-            <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
-                <div class="col-md-10">
-                    <h3>No. @room.Number - @room.Type</h3>
-
-                    <a class="text-muted">
-                        <b>capacity:</b> @room.Capacity
-                    </a>
-                </div>
-
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
-                <div class="col-md-10">
-                    @if (room.Type == RoomType.TwoBeds)
-                    {
-                        <h3>No. @room.Number - Room with separate beds</h3>
-                    }
-                    else if (room.Type == RoomType.DoubleBed)
-                    {
-                        <h3>No. @room.Number - Room with a double bed</h3>
-                    }
-                    else if (room.Type == RoomType.PentHouse)
-                    {
-                        <h3>No. @room.Number - Penthouse</h3>
-                    }
-                    else
-                    {
+            if (room.IsFree)
+            {
+                <div class="d-flex row my-3 mx-2" style="background-color:#b3ffb3">
+                    <div class="col-md-10">
                         <h3>No. @room.Number - @room.Type</h3>
-                    }
 
-                    <a class="text-muted">
-                        <b>capacity:</b> @room.Capacity
-                    </a>
-                </div>
+                        <a class="text-muted">
+                            <b>capacity:</b> @room.Capacity
+                        </a>
+                    </div>
 
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    <div class="col-md-1">
+                        <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
+                    <div class="col-md-10">
+                        @if (room.Type == RoomType.TwoBeds)
+                        {
+                            <h3>No. @room.Number - Room with separate beds</h3>
+                        }
+                        else if (room.Type == RoomType.DoubleBed)
+                        {
+                            <h3>No. @room.Number - Room with a double bed</h3>
+                        }
+                        else if (room.Type == RoomType.PentHouse)
+                        {
+                            <h3>No. @room.Number - Penthouse</h3>
+                        }
+                        else
+                        {
+                            <h3>No. @room.Number - @room.Type</h3>
+                        }
+
+                        <a class="text-muted">
+                            <b>capacity:</b> @room.Capacity
+                        </a>
+                    </div>
+
+                    <div class="col-md-1">
+                        <a asp-action="Details" asp-route-id="@room.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    </div>
+                </div>
+            }
+
+
         }
-
-
-    }
+    </div>
 </div>
 
 <script>

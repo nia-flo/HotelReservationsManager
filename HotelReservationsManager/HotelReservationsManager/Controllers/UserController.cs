@@ -231,6 +231,9 @@ namespace HotelReservationsManager.Controllers
                 ModelState.AddModelError("Email", "There is an user with this email.");
                 //return Page();
             }
+
+
+
             if (ModelState.IsValid)
             {
                 User user = context.Users.First(u => u.Id == model.Id);

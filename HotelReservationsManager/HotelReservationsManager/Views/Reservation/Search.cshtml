@@ -11,9 +11,9 @@
 
 <a class="mb-3 btn btn-warning my-3" asp-action="Create" asp-controller="Reservation">Create new Reservation</a>
 
+<div class="col-md-4 mx-auto">
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="row">
         <form asp-action="Search" asp-controller="Reservation" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
@@ -35,49 +35,49 @@
                 <span asp-validation-for="Value" class="text-danger"></span>
             </div>
 
-            <div class="form-group col-md2">
+            <div class="form-group col-md-2">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
 
-<div class="justify-content-between">
-    @foreach (var reservation in Model.Reservations)
-    {
-        <div class="d-flex row my-3 mx-2">
-            <div class="col-md-10">
-                @if (reservation.RoomType == RoomType.TwoBeds)
-                {
-                    <h3>Room No. @reservation.RoomNumber - Room with separate beds</h3>
-                }
-                else if (reservation.RoomType == RoomType.DoubleBed)
-                {
-                    <h3>Room No. @reservation.RoomNumber - Room with a double bed</h3>
-                }
-                else if (reservation.RoomType == RoomType.PentHouse)
-                {
-                    <h3>Room No. @reservation.RoomNumber - Penthouse</h3>
-                }
-                else
-                {
-                    <h3>Room No. @reservation.RoomNumber - @reservation.RoomType</h3>
-                }
+    <div class="justify-content-between">
+        @foreach (var reservation in Model.Reservations)
+        {
+            <div class="d-flex row my-3 mx-2">
+                <div class="col-md-10">
+                    @if (reservation.RoomType == RoomType.TwoBeds)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Room with separate beds</h3>
+                    }
+                    else if (reservation.RoomType == RoomType.DoubleBed)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Room with a double bed</h3>
+                    }
+                    else if (reservation.RoomType == RoomType.PentHouse)
+                    {
+                        <h3>Room No. @reservation.RoomNumber - Penthouse</h3>
+                    }
+                    else
+                    {
+                        <h3>Room No. @reservation.RoomNumber - @reservation.RoomType</h3>
+                    }
 
-                <a class="text-muted">
-                    <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
-                    &nbsp;
-                    <b>Price:</b> @reservation.Price
-                </a>
+                    <a class="text-muted">
+                        <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
+                        &nbsp;
+                        <b>Price:</b> @reservation.Price
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a asp-action="Details" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                </div>
             </div>
 
-            <div class="col-md-1">
-                <a asp-action="Details" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
-            </div>
-        </div>
 
-
-    }
+        }
+    </div>
 </div>
 
 <script>
