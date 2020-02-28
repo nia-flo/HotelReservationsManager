@@ -4,6 +4,7 @@ using System.Linq;
 using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
 using HotelReservationsManager.Models;
+using HotelReservationsManager.Models.ReservationViewModels;
 using HotelReservationsManager.Models.UserViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -256,6 +257,23 @@ namespace HotelReservationsManager.Controllers
 
             return Redirect("~/User/Details/" + user.Id);
             //return Redirect("~/User/Employees");
+        }
+
+        public IActionResult Reservations(string id)
+        {
+            User user = context.Users.Find(id);
+
+            UserViewModel userViewModel = new UserViewModel(user.Id, user.UserName, user.Email, user.FirstName,
+                user.MiddleName, user.LastName, user.IsActive);
+
+            List<ReservationViewModel> reservations = context.Reservations.Where(r => r.Creator.Id == id)
+                .Select(r => new ReservationViewModel(r.Id, r.Room.Number,r.Room.Type, r.CheckInDate, 
+                r.CheckOutDate, r.Price))
+                .ToList();
+
+            UserReservationsViewModel model = new UserReservationsViewModel(userViewModel, reservations);
+
+            return View(model);
         }
     }
 }
