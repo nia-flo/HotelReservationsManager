@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
@@ -19,6 +21,26 @@ namespace HotelReservationsManager.Controllers
     {
         private DbContext context;
         private UserManager<User> userManager;
+        protected void SendEmail(string toEmail, string subject, string body)
+        {
+
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+            mail.To.Add(toEmail);
+            mail.From = new MailAddress("hotel.reservations.manager@gmail.com", "Hotel Reservations Manager", System.Text.Encoding.UTF8);
+            mail.Subject = subject;
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Body = body;
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("hotel.reservations.manager@gmail.com", "hotelreservationsmanagerpassword");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+
+            client.Send(mail);
+        }
 
         public ReservationController(DbContext context, UserManager<User> userManager)
         {
@@ -77,7 +99,7 @@ namespace HotelReservationsManager.Controllers
                             (previousReservation.CheckInDate < model.CheckOutDate
                             && model.CheckInDate <= previousReservation.CheckOutDate)))
                     {
-                        return Redirect("~/Reservation/RoomNotFree");;
+                        return Redirect("~/Reservation/RoomNotFree"); ;
                     }
                 }
 
@@ -109,6 +131,51 @@ namespace HotelReservationsManager.Controllers
 
                 context.Reservations.Add(reservation);
                 context.SaveChanges();
+
+                StringBuilder body = new StringBuilder();
+                body.AppendLine("<h1>Reservation details:</h1><br/>");
+                body.AppendLine($"<h3>Check-in date:</h3> {reservation.CheckInDate.Date}<br/>");
+                body.AppendLine($"<h3>Check-out date:</h3> {reservation.CheckOutDate.Date}<br/>");
+                if (reservation.IsBreakfastIncluded)
+                {
+                    body.AppendLine("<h3>Extra:</h3> With included breakfast.<br/>");
+                    body.AppendLine();
+                }
+                if (reservation.IsAllInclusive)
+                {
+                    body.AppendLine("<h3>Extra:</h3> With all-inclusive.<br/>");
+                    body.AppendLine();
+                }
+                body.AppendLine("<h3>Clients:</h3><ul>");
+                foreach (var client in reservation.ClientReservations.Select(cl => cl.Client))
+                {
+                    body.AppendLine($"<li> {client.FirstName} {client.LastName}</li>");
+                }
+                body.AppendLine("</ul>");
+                body.AppendLine("<h3>Room:</h3>");
+                if (room.Type == RoomType.TwoBeds)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Room with separate beds<br/>");
+                }
+                else if (room.Type == RoomType.DoubleBed)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Room with a double bed<br/>");
+                }
+                else if (room.Type == RoomType.PentHouse)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Penthouse<br/>");
+                }
+                else
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - {reservation.Room.Type}<br/>");
+                }
+                body.AppendLine($"<h3>Price:</h3> {reservation.Price}");
+
+
+                foreach (var client in reservation.ClientReservations.Select(cl => cl.Client.Email))
+                {
+                    SendEmail(client, "New hotel reservation", body.ToString());
+                }
 
                 return Redirect("~/Reservation/Details/" + reservation.Id);
             }
@@ -305,6 +372,51 @@ namespace HotelReservationsManager.Controllers
 
                 context.Update(reservation);
                 context.SaveChanges();
+
+                StringBuilder body = new StringBuilder();
+                body.AppendLine("<h1>Reservation details:</h1><br/>");
+                body.AppendLine($"<h3>Check-in date:</h3> {reservation.CheckInDate.Date}<br/>");
+                body.AppendLine($"<h3>Check-out date:</h3> {reservation.CheckOutDate.Date}<br/>");
+                if (reservation.IsBreakfastIncluded)
+                {
+                    body.AppendLine("<h3>Extra:</h3> With included breakfast.<br/>");
+                    body.AppendLine();
+                }
+                if (reservation.IsAllInclusive)
+                {
+                    body.AppendLine("<h3>Extra:</h3> With all-inclusive.<br/>");
+                    body.AppendLine();
+                }
+                body.AppendLine("<h3>Clients:</h3><ul>");
+                foreach (var client in reservation.ClientReservations.Select(cl => cl.Client))
+                {
+                    body.AppendLine($"<li> {client.FirstName} {client.LastName}</li>");
+                }
+                body.AppendLine("</ul>");
+                body.AppendLine("<h3>Room:</h3>");
+                if (room.Type == RoomType.TwoBeds)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Room with separate beds<br/>");
+                }
+                else if (room.Type == RoomType.DoubleBed)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Room with a double bed<br/>");
+                }
+                else if (room.Type == RoomType.PentHouse)
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - Penthouse<br/>");
+                }
+                else
+                {
+                    body.AppendLine($"Room No. {reservation.Room.Number} - {reservation.Room.Type}<br/>");
+                }
+                body.AppendLine($"<h3>Price:</h3> {reservation.Price}");
+
+
+                foreach (var client in reservation.ClientReservations.Select(cl => cl.Client.Email))
+                {
+                    SendEmail(client, "Hotel reservation edited", body.ToString());
+                }
 
                 return Redirect("~/Reservation/Details/" + reservation.Id);
             }
