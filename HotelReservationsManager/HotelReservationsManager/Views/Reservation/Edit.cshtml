@@ -5,7 +5,7 @@
 }
 
 
-<h1>Edit reservation</h1>
+<h1 class="text-center">Edit reservation</h1>
 
 <hr class="style1 bg-warning mb-2" />
 
@@ -14,7 +14,7 @@
 <div class="col-md-4 mx-auto">
 
     <form asp-action="Edit" asp-controller="Reservation" method="post">
-        <h2>Choose stay options</h2>
+        <h2 class="text-center">Choose stay options</h2>
         <hr />
 
         <div class="row mb-3">
@@ -37,18 +37,24 @@
         <div class="row mb-3 custom-control custom-checkbox">
             <input asp-for="IsAllInclusive" type="checkbox" class="custom-control-input" id="IsAllInclusive">
             <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
-        </div>c
+        </div>
 
-        <select class="custom-select mb-3" name="ChoosenClients" asp-for="ChoosenClients" multiple>
-            <option disabled>--- Select clients ---</option>
-            @foreach (var client in Model.Clients)
-            {
-                <option value="@client.Id">@client.FirstName @client.LastName</option>
-            }
-        </select>
-        <span asp-validation-for="ChoosenClients" class="text-danger"></span>
+        <h2 class="text-center">Choose clients</h2>
+        <hr />
+        <div class="mb-2">
+            <select class="custom-select" name="ChoosenClients" asp-for="ChoosenClients" multiple>
+                @*<option disabled>--- Select clients ---</option>*@
+                @foreach (var client in Model.Clients)
+                {
+                    <option value="@client.Id">@client.FirstName @client.LastName</option>
+                }
+            </select>
+            <a class="text-muted">To select more than 1 client use ctrl + click</a>
+            <br />
+            <span asp-validation-for="ChoosenClients" class="text-danger"></span>
+        </div>
 
-        <h2>Choose room</h2>
+        <h2 class="text-center">Choose room</h2>
         <hr />
 
         <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom">
@@ -76,11 +82,22 @@
         </select>
         <span asp-validation-for="ChoosenRoom" class="text-danger"></span>
 
-        <div class="d-flex">
-            <div class="align-self-center mx-auto">
-                <div class="form-group">
-                    <input type="submit" value="Next" class="btn btn-primary" />
+        @*<div class="d-flex">
+                <div class="align-self-center mx-auto">
+                    <div class="form-group">
+                        <input type="submit" value="Save changes" class="btn btn-primary" />
+                    </div>
                 </div>
+            </div>*@
+
+        <div class="row justify-content-around">
+            <div class="form-group col">
+                <input type="submit" value="Save changes" class="btn btn-primary my-auto" />
+            </div>
+
+            <div class="col">
+                <input type="submit" asp-action="Delete" asp-controller="Reservation" asp-route-id="@Model.Id" value="Delete reservation" class="btn btn-primary my-auto" />
+                @*<a asp-action="Delete" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Delete</a>*@
             </div>
         </div>
     </form>

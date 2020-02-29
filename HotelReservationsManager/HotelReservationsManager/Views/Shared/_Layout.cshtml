@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - HotelReservationsManager</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -34,7 +36,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item text-center"
-                                           asp-controller="User" asp-action="Create">
+                                           asp-area="Identity" asp-page="/Account/Register">
                                             Create
                                         </a>
                                         <a class="dropdown-item text-center"

@@ -5,7 +5,7 @@
 }
 
 
-<h1>Create reservation</h1>
+<h1 class="text-center">Create reservation</h1>
 
 <hr class="style1 bg-warning mb-2" />
 
@@ -14,7 +14,7 @@
 <div class="col-md-4 mx-auto">
 
     <form asp-action="Create" asp-controller="Reservation" method="post">
-        <h2>Choose stay options</h2>
+        <h2 class="text-center">Choose stay options</h2>
         <hr />
 
         <div class="row mb-3">
@@ -39,19 +39,23 @@
             <label class="custom-control-label" for="IsAllInclusive">All-inclusive</label>
         </div>
 
-        <h2>Choose clients</h2>
+        <h2 class="text-center">Choose clients</h2>
         <hr />
 
-        <select class="custom-select mb-3" name="ChoosenClients" asp-for="ChoosenClients" multiple>
-            <option selected disabled>--- Select clients ---</option>
-            @foreach (var client in Model.Clients)
-            {
-                <option value="@client.Id">@client.FirstName @client.LastName</option>
-            }
-        </select>
-        <span asp-validation-for="ChoosenClients" class="text-danger"></span>
+        <div class="mb-2">
+            <select class="custom-select" name="ChoosenClients" asp-for="ChoosenClients" multiple>
+                @*<option disabled>--- Select clients ---</option>*@
+                @foreach (var client in Model.Clients)
+                {
+                    <option value="@client.Id">@client.FirstName @client.LastName</option>
+                }
+            </select>
+            <a class="text-muted">To select more than 1 client use ctrl + click</a>
+            <br />
+            <span asp-validation-for="ChoosenClients" class="text-danger"></span>
+        </div>
 
-        <h2>Choose room</h2>
+        <h2 class="text-center">Choose room</h2>
         <hr />
 
         <select class="custom-select mb-3" name="ChoosenRoom" asp-for="ChoosenRoom">

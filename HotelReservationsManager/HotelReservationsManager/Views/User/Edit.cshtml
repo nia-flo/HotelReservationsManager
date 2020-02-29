@@ -68,21 +68,24 @@
             </div>
         }
 
-        <div class="row justify-content-around">
-            <div class="form-group col-md-2 my-auto">
-                <input type="submit" value="Update" class="mb-3 btn btn-warning my-3" />
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <div class="form-group align-self-center mx-auto my-auto">
+                    <input type="submit" value="Save changes" class="mb-3 btn btn-warning my-3" />
+                </div>
             </div>
 
-            <div class="col-md-2 my-auto">
-                @if (Model.IsActive)
-                {
-                    <a asp-action="Dismiss" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
-                }
-                else
-                {
-                    <a asp-action="Hire" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Hire</a>
-
-                }
+            <div class="col-md-6 d-flex">
+                <div class="align-self-center mx-auto my-auto">
+                    @if (Model.IsActive)
+                    {
+                        <a asp-action="Dismiss" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Hire" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Hire</a>
+                    }
+                </div>
             </div>
 
         </div>

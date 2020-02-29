@@ -308,6 +308,15 @@ namespace HotelReservationsManager.Controllers
         [HttpPost]
         public IActionResult Edit(ReservationEditViewModel model)
         {
+            if (model.CheckInDate < DateTime.Now)
+            {
+                ModelState.AddModelError("CheckInDate", "Check-in date cannot be in the past.");
+            }
+
+            if (model.CheckOutDate < DateTime.Now)
+            {
+                ModelState.AddModelError("CheckOutDate", "Check-out date cannot be in the past.");
+            }
 
             if (ModelState.IsValid)
             {
