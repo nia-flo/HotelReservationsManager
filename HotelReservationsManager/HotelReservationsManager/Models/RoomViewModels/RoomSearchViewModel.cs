@@ -18,10 +18,8 @@ namespace HotelReservationsManager.Models.RoomViewModels
 
         }
 
-        public RoomSearchViewModel(string searchBy, string value, List<RoomViewModel> rooms)
+        public RoomSearchViewModel(List<RoomViewModel> rooms)
         {
-            SearchBy = searchBy;
-            Value = value;
             Rooms = rooms;
         }
     }

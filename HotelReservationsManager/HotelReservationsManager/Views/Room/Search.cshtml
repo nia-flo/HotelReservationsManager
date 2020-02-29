@@ -15,7 +15,7 @@
             <form asp-action="Search" asp-controller="Room" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <select id="search-by" class="custom-select mb-3" asp-for="SearchBy">
-                    <option value="Capacity" selected disabled>--- Select a search criteria ---</option>
+                    <option value="default" selected disabled>--- Select a search criteria ---</option>
                     <option value="Capacity">Capacity</option>
                     <option value="Type">Room type</option>
                     <option value="IsFree">Free or occupated room</option>
@@ -27,11 +27,11 @@
                 </div>
 
                 <select id="search-by-type" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
-                    <option value="1">Room with separate beds</option>
+                    <option value="1" selected >Room with separate beds</option>
                     <option value="2">Room with a double bed</option>
                     <option value="3">Apartment</option>
-                    <option value="4">Penthouse</option>
                     <option value="5">Maisonette</option>
+                    <option value="4">Penthouse</option>
                 </select>
 
                 <select id="search-by-isfree" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
@@ -55,7 +55,7 @@
         {
             if (room.IsFree)
             {
-                <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
+                <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#b3ffb3">
                     <div class="col-md-10">
                         @if (room.Type == RoomType.TwoBeds)
                         {
@@ -86,7 +86,7 @@
             }
             else
             {
-                <div class="d-flex row my-3 mx-2" style="background-color:#ffb3b3">
+                <div class="d-flex jumbotron py-0 px-0 row my-3 mx-2" style="background-color:#ffb3b3">
                     <div class="col-md-10">
                         @if (room.Type == RoomType.TwoBeds)
                         {
@@ -123,7 +123,13 @@
 
 <script>
     $('#search-by').change(function () {
+        console.log('smenqm search criteria');
         $('.search-by-criteria').addClass('d-none');
         $('#search-by-' + $(this).val().toLowerCase()).removeClass('d-none');
     });
+
+    $('#search-by-type').change(function () {
+        console.log($(this).val());
+    });
 </script>
+

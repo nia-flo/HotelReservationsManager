@@ -12,7 +12,7 @@ namespace HotelReservationsManager.Models
 
         public int Capacity { get; set; }
 
-        public RoomType Type { get; set; }
+        public string Type { get; set; }
 
         public bool IsFree { get; set; }
 

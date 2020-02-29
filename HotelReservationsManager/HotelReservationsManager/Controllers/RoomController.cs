@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HotelReservationsManager.Data;
 using HotelReservationsManager.Data.Models;
@@ -60,11 +61,33 @@ namespace HotelReservationsManager.Controllers
         {
             Room room = context.Rooms.FindAsync(id).Result;
 
+            string type;
+            if (room.Type == RoomType.TwoBeds)
+            {
+                type = "Room with separate beds";
+            }
+            else if (room.Type == RoomType.DoubleBed)
+            {
+                type = "Room with a double bed";
+            }
+            else if (room.Type == RoomType.PentHouse)
+            {
+                type = "Penthouse";
+            }
+            else if (room.Type == RoomType.Maisonette)
+            {
+                type = "Maisonette";
+            }
+            else
+            {
+                type = "Apartment";
+            }
+
             RoomDetailsViewModel model = new RoomDetailsViewModel()
             {
                 Id = room.Id,
                 Capacity = room.Capacity,
-                Type = room.Type,
+                Type = type,
                 AdultPrice = room.AdultPrice,
                 ChildPrice = room.ChildPrice,
                 Number = room.Number,
@@ -101,7 +124,7 @@ namespace HotelReservationsManager.Controllers
 
             if (room.Number != model.Number && context.Rooms.First(r => r.Number == model.Number) != null)
             {
-                    ModelState.AddModelError("Number", "There is already created room with this number.");
+                ModelState.AddModelError("Number", "There is already created room with this number.");
 
             }
             if (ModelState.IsValid)
@@ -123,8 +146,46 @@ namespace HotelReservationsManager.Controllers
             return View();
         }
 
+        //[HttpGet]
+        //public IActionResult Search()
+        //{
+        //    List<RoomViewModel> rooms = context.Rooms
+        //                       .OrderBy(u => u.Number)
+        //                       .ThenBy(u => u.Type)
+        //                       .Select(u => new RoomViewModel(u.Id, u.Capacity, u.Type, u.IsFree, u.Number))
+        //                       .ToList();
+
+        //    RoomSearchViewModel model = new RoomSearchViewModel(rooms);
+
+        //    return View(model);
+        //}
+
+        //[HttpPost]
         public IActionResult Search(RoomSearchViewModel model)
         {
+            //List<Room> updatedRooms = new List<Room>();
+            //foreach (var room in context.Rooms)
+            //{
+            //    room.IsFree = true;
+            //    foreach (var reservation in context.Reservations)
+            //    {
+            //        if (reservation.Room.Id == room.Id &&
+            //            reservation.CheckInDate <= DateTime.Now && DateTime.Now <= reservation.CheckOutDate)
+            //        {
+            //            room.IsFree = false;
+            //            break;
+            //        }
+            //    }
+
+            //    updatedRooms.Add(room);
+            //}
+
+            //foreach (var room in updatedRooms)
+            //{
+            //    context.Update(room);
+            //}
+            //context.SaveChanges();
+
             if (model.SearchBy == "Capacity")
             {
                 model.Rooms = context.Rooms.Where(u => u.Capacity == int.Parse(model.Value))

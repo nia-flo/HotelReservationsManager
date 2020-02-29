@@ -234,20 +234,20 @@ namespace HotelReservationsManager.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Search()
-        {
-            List<ReservationViewModel> reservations = context.Reservations
-                .Select(r => new ReservationViewModel(r.Id, r.Room.Number, r.Room.Type, r.CheckInDate,
-                    r.CheckOutDate, r.Price))
-                .ToList();
+        //[HttpGet]
+        //public IActionResult Search()
+        //{
+        //    List<ReservationViewModel> reservations = context.Reservations
+        //        .Select(r => new ReservationViewModel(r.Id, r.Room.Number, r.Room.Type, r.CheckInDate,
+        //            r.CheckOutDate, r.Price))
+        //        .ToList();
 
-            ReservationSearchViewModel model = new ReservationSearchViewModel(reservations);
+        //    ReservationSearchViewModel model = new ReservationSearchViewModel(reservations);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [HttpPost]
+        //[HttpPost]
         public IActionResult Search(ReservationSearchViewModel model)
         {
             if (model.SearchBy == "RoomType")
