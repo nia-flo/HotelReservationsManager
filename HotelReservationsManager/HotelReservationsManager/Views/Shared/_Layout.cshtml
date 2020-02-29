@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - HotelReservationsManager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src ="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/@@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -22,41 +22,82 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </li>*@
+
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             if (this.User.IsInRole("Admin"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Employees">Employees</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Rooms">Rooms</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Clients">Clients</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Reservations">Reservations</a>
-                                </li>
-                            }
-                            else
-                            {                                                        
-                                <li class="nav-item">                                        
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Rooms">Rooms</a>
-                                </li>                                                         
-                                <li class="nav-item">                                         
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Clients">Clients</a>
-                                </li>                                                         
-                                <li class="nav-item">                                         
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Reservations">Reservations</a>
+                                <li class="nav-item dropdown align-self-center">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        User
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item text-center"
+                                           asp-controller="User" asp-action="Create">
+                                            Create
+                                        </a>
+                                        <a class="dropdown-item text-center"
+                                           asp-controller="User" asp-action="Search">
+                                            Search
+                                        </a>
+                                    </div>
                                 </li>
                             }
+
+                            <li class="nav-item dropdown align-self-center">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Client
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-center"
+                                       asp-controller="Client" asp-action="Create">
+                                        Create
+                                    </a>
+                                    <a class="dropdown-item text-center"
+                                       asp-controller="Clint" asp-action="Search">
+                                        Search
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown align-self-center">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Room
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (this.User.IsInRole("Admin"))
+                                    {
+                                        <a class="dropdown-item text-center"
+                                           asp-controller="Room" asp-action="Create">
+                                            Create
+                                        </a>
+                                    }
+                                    <a class="dropdown-item text-center"
+                                       asp-controller="Room" asp-action="Search">
+                                        Search
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown align-self-center">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Reservation
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item text-center"
+                                       asp-controller="Reservation" asp-action="Create">
+                                        Create
+                                    </a>
+                                    <a class="dropdown-item text-center"
+                                       asp-controller="Reservation" asp-action="Search">
+                                        Search
+                                    </a>
+                                </div>
+                            </li>
                         }
                     </ul>
                 </div>
