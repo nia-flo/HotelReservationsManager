@@ -56,9 +56,8 @@ namespace HotelReservationsManager.Models.UserViewModels
 
         public bool IsActive { get; set; }
 
-        [Required]
-        [DateGreaterThan("HireDate")]
+        //[DateGreaterThan("HireDate")]
         [Display(Name = "Dismiss date")]
-        public DateTime DismissDate { get; set; }
+        public DateTime? DismissDate { get; set; }
     }
 }

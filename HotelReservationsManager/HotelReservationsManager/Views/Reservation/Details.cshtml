@@ -63,44 +63,46 @@
     <div class="d-flex row my-3 mx-2">
         <div class="d-flex jumbotron py-1 px-1 my-3 mx-auto" style="background-color:#bcb2b2">
             @*<div class="d-flex jumbotron py-1 px-1 my-3 mx-auto" style="background-color:#bcb2b2">*@
-                <div class="col-md-9">
-                    @if (Model.Room.Type == RoomType.TwoBeds)
-                    {
-                        <h4>Room No. @Model.Room.Number - Room with separate beds</h4>
-                    }
-                    else if (Model.Room.Type == RoomType.DoubleBed)
-                    {
-                        <h4>Room No. @Model.Room.Number - Room with a double bed</h4>
-                    }
-                    else if (Model.Room.Type == RoomType.PentHouse)
-                    {
-                        <h4>Room No. @Model.Room.Number - Penthouse</h4>
-                    }
-                    else
-                    {
-                        <h4>Room No. @Model.Room.Number - @Model.Room.Type</h4>
-                    }
+            <div class="col-md-9">
+                @if (Model.Room.Type == RoomType.TwoBeds)
+                {
+                    <h4>Room No. @Model.Room.Number - Room with separate beds</h4>
+                }
+                else if (Model.Room.Type == RoomType.DoubleBed)
+                {
+                    <h4>Room No. @Model.Room.Number - Room with a double bed</h4>
+                }
+                else if (Model.Room.Type == RoomType.PentHouse)
+                {
+                    <h4>Room No. @Model.Room.Number - Penthouse</h4>
+                }
+                else
+                {
+                    <h4>Room No. @Model.Room.Number - @Model.Room.Type</h4>
+                }
 
-                    <a class="text-muted">
-                        <b>capacity:</b> @Model.Room.Capacity
-                    </a>
-                </div>
-
-                <div class="col-md-1">
-                    <a asp-action="Details" asp-controller="Room" asp-route-id="@Model.Room.Id" class="btn btn-warning my-3">Details</a>
-                </div>
-
+                <a class="text-muted">
+                    <b>capacity:</b> @Model.Room.Capacity
+                </a>
             </div>
+
+            <div class="col-md-1">
+                <a asp-action="Details" asp-controller="Room" asp-route-id="@Model.Room.Id" class="btn btn-warning my-3">Details</a>
+            </div>
+
         </div>
+    </div>
 
-        <div class="row">
-            <h2 class="col-md-5 my-auto mr-3 text-right">Price</h2>
-            <h2 class="col-md-1 my-auto text-center">-</h2>
-            <h4 class="col-md-5 my-auto ml-3 text-left">@Model.Price</h4>
-        </div>
+    <div class="row">
+        <h2 class="col-md-5 my-auto mr-3 text-right">Price</h2>
+        <h2 class="col-md-1 my-auto text-center">-</h2>
+        <h4 class="col-md-5 my-auto ml-3 text-left">@Model.Price</h4>
+    </div>
 
-        <hr />
+    <hr />
 
+    @if (this.User.IsInRole("Admin"))
+    {
         <h2 class="text-center">Creator</h2>
         <hr />
 
@@ -115,14 +117,15 @@
                 </div>
             </div>
         </div>
+    }
 
-        <div class="d-flex">
-            <div class="align-self-center mx-auto">
-                <a asp-action="Edit" asp-controller="Reservation" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
-            </div>
+    <div class="d-flex">
+        <div class="align-self-center mx-auto">
+            <a asp-action="Edit" asp-controller="Reservation" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Edit</a>
         </div>
-
     </div>
+
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

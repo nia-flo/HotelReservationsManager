@@ -109,7 +109,7 @@ namespace HotelReservationsManager.Controllers
                              })
                              .ToList();
             }
-            else if(model.SearchBy == "Email")
+            else if (model.SearchBy == "Email")
             {
                 model.Users =
                 context.Users.Where(u => context.UserRoles.First(ur => ur.UserId == u.Id).RoleId ==
@@ -198,6 +198,10 @@ namespace HotelReservationsManager.Controllers
                 IsActive = user.IsActive
             };
 
+            if (user.IsActive)
+            {
+                model.DismissDate = null;
+            }
 
             return View(model);
         }
@@ -223,7 +227,8 @@ namespace HotelReservationsManager.Controllers
                 ModelState.AddModelError("PhoneNumber", "There is an user with this phone number.");
             }
 
-            if (context.Users.FirstOrDefault(u => u.Email == model.Email) != null)
+            User sameEmail = context.Users.FirstOrDefault(u => u.Email == model.Email);
+            if (sameEmail != null && sameEmail.Id != model.Id)
             {
                 ModelState.AddModelError("Email", "There is an user with this email.");
             }
@@ -233,9 +238,16 @@ namespace HotelReservationsManager.Controllers
                 ModelState.AddModelError("HireDate", "Hire date cannot be in the future.");
             }
 
-            if (model.DismissDate > DateTime.Now)
+            if (model.DismissDate != null)
             {
-                ModelState.AddModelError("DismissDate", "Dismiss date cannot be in the future.");
+                if (model.DismissDate < model.HireDate)
+                {
+                    ModelState.AddModelError("DismissDate", "Dismiss date must be later than Hire date.");
+                }
+                if (model.DismissDate > DateTime.Now)
+                {
+                    ModelState.AddModelError("DismissDate", "Dismiss date cannot be in the future.");
+                }
             }
 
             if (ModelState.IsValid)
@@ -250,7 +262,7 @@ namespace HotelReservationsManager.Controllers
                 user.EGN = model.EGN;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
-                user.DismissDate = model.DismissDate;
+                user.DismissDate = model.DismissDate.GetValueOrDefault();
                 user.HireDate = model.HireDate;
                 //user.IsActive = model.IsActive;
 
@@ -300,7 +312,7 @@ namespace HotelReservationsManager.Controllers
                 user.MiddleName, user.LastName, user.IsActive);
 
             List<ReservationViewModel> reservations = context.Reservations.Where(r => r.Creator.Id == id)
-                .Select(r => new ReservationViewModel(r.Id, r.Room.Number,r.Room.Type, r.CheckInDate, 
+                .Select(r => new ReservationViewModel(r.Id, r.Room.Number, r.Room.Type, r.CheckInDate,
                 r.CheckOutDate, r.Price))
                 .ToList();
 
