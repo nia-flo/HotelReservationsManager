@@ -21,23 +21,7 @@
                     <option value="IsFree">Free or occupated room</option>
                 </select>
 
-                <div id="search-by-capacity" class="search-by-criteria d-none form-group">
-                    <input asp-for="Value" class="form-control" />
-                    <span asp-validation-for="Value" class="text-danger"></span>
-                </div>
-
-                <select id="search-by-type" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
-                    <option value="1" selected >Room with separate beds</option>
-                    <option value="2">Room with a double bed</option>
-                    <option value="3">Apartment</option>
-                    <option value="5">Maisonette</option>
-                    <option value="4">Penthouse</option>
-                </select>
-
-                <select id="search-by-isfree" class="search-by-criteria d-none custom-select mb-3" asp-for="Value">
-                    <option value="Free">Free</option>
-                    <option value="Occupated">Occupated</option>
-                </select>
+                <div id="criterias"></div>
 
                 <div class="d-flex">
                     <div class="align-self-center mx-auto">
@@ -122,14 +106,35 @@
 </div>
 
 <script>
-    $('#search-by').change(function () {
-        console.log('smenqm search criteria');
-        $('.search-by-criteria').addClass('d-none');
-        $('#search-by-' + $(this).val().toLowerCase()).removeClass('d-none');
-    });
+    let capacityTemplate =
+        '<div id="search-by-capacity" class="search-by-criteria form-group">'
+        + '     <input name="Value" class="form-control" />'
+        + '     <span asp-validation-for="Value" class="text-danger"></span>'
+        + '</div>';
 
-    $('#search-by-type').change(function () {
-        console.log($(this).val());
+    let typeTemplate =
+        '<select id="search-by-roomtype" class="search-by-criteria custom-select mb-3" name="Value">'
+        + '     <option value="1">Room with separate beds</option>'
+        + '     <option value="2">Room with a double bed</option>'
+        + '     <option value="3">Apartment</option>'
+        + '     <option value="4">Maisonette</option>'
+        + '     <option value="5">Penthouse</option>'
+        + '</select>';
+
+    let isfreeTemplate =
+        '<select id="search-by-isfree" class="search-by-criteria custom-select mb-3" name="Value">'
+        + '     <option value="Free">Free</option>'
+        + '     <option value="Occupated">Occupated</option>'
+        + '</select>'
+
+    let templates = {
+        'search-by-capacity': capacityTemplate,
+        'search-by-type': typeTemplate,
+        'search-by-isfree': isfreeTemplate
+    };
+
+    $('#search-by').change(function () {
+        $('#criterias').empty();
+        $('#criterias').append(templates['search-by-' + $(this).val().toLowerCase()]);
     });
 </script>
-
