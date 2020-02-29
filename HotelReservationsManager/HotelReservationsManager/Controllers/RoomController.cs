@@ -146,45 +146,30 @@ namespace HotelReservationsManager.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public IActionResult Search()
-        //{
-        //    List<RoomViewModel> rooms = context.Rooms
-        //                       .OrderBy(u => u.Number)
-        //                       .ThenBy(u => u.Type)
-        //                       .Select(u => new RoomViewModel(u.Id, u.Capacity, u.Type, u.IsFree, u.Number))
-        //                       .ToList();
-
-        //    RoomSearchViewModel model = new RoomSearchViewModel(rooms);
-
-        //    return View(model);
-        //}
-
-        //[HttpPost]
         public IActionResult Search(RoomSearchViewModel model)
         {
-            //List<Room> updatedRooms = new List<Room>();
-            //foreach (var room in context.Rooms)
-            //{
-            //    room.IsFree = true;
-            //    foreach (var reservation in context.Reservations)
-            //    {
-            //        if (reservation.Room.Id == room.Id &&
-            //            reservation.CheckInDate <= DateTime.Now && DateTime.Now <= reservation.CheckOutDate)
-            //        {
-            //            room.IsFree = false;
-            //            break;
-            //        }
-            //    }
+            List<Room> updatedRooms = new List<Room>();
+            foreach (var room in context.Rooms)
+            {
+                room.IsFree = true;
+                foreach (var reservation in context.Reservations)
+                {
+                    if (reservation.Room.Id == room.Id &&
+                        reservation.CheckInDate <= DateTime.Now && DateTime.Now <= reservation.CheckOutDate)
+                    {
+                        room.IsFree = false;
+                        break;
+                    }
+                }
 
-            //    updatedRooms.Add(room);
-            //}
+                updatedRooms.Add(room);
+            }
 
-            //foreach (var room in updatedRooms)
-            //{
-            //    context.Update(room);
-            //}
-            //context.SaveChanges();
+            foreach (var room in updatedRooms)
+            {
+                context.Update(room);
+            }
+            context.SaveChanges();
 
             if (model.SearchBy == "Capacity")
             {
