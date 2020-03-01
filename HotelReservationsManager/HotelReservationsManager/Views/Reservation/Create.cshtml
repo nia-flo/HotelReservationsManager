@@ -64,21 +64,20 @@
             {
                 @if (room.Type == RoomType.TwoBeds)
                 {
-                    <h3>No. @room.Number - Room with separate beds</h3>
+                    <option value="@room.Id">No. @room.Number - Room with separate beds - max @room.Capacity people </option>
                 }
                 else if (room.Type == RoomType.DoubleBed)
                 {
-                    <h3>No. @room.Number - Room with a double bed</h3>
+                    <option value="@room.Id">No. @room.Number - Room with a double bed - max @room.Capacity people </option>
                 }
                 else if (room.Type == RoomType.PentHouse)
                 {
-                    <h3>No. @room.Number - Penthouse</h3>
+                    <option value="@room.Id">No. @room.Number - Penthouse - max @room.Capacity people </option>
                 }
                 else
                 {
-                    <h3>No. @room.Number - @room.Type</h3>
+                    <option value="@room.Id">No. @room.Number - @room.Type - max @room.Capacity people </option>
                 }
-                <option value="@room.Id">No. @room.Number - @room.Type - max @room.Capacity people </option>
             }
         </select>
         <span asp-validation-for="ChoosenRoom" class="text-danger"></span>
