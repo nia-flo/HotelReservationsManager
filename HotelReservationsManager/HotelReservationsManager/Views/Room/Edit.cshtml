@@ -45,25 +45,16 @@
             <span asp-validation-for="Number" class="text-danger"></span>
         </div>
 
-        @*<div class="d-flex">
-            <div class="align-self-center mx-auto">
-                <div class="form-group col-md-1">
-                    <input type="submit" value="Save changes" class="btn btn-primary" />
-                </div>
-            </div>
-        </div>*@
-
         <div class="row">
             <div class="col-md-6 d-flex">
                 <div class="form-group align-self-center mx-auto my-auto">
-                    <input type="submit" value="Save changes" class="btn btn-primary" />
+                    <input type="submit" value="Save changes" class="btn btn-warning" />
                 </div>
             </div>
 
             <div class="col-md-6 d-flex">
                 <div class="align-self-center mx-auto my-auto">
-                    <input type="submit" asp-action="Delete" asp-controller="Room" asp-route-id="@Model.Id" value="Delete room" class="btn btn-primary" />
-                    @*<a asp-action="Delete" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Delete</a>*@
+                    <input type="submit" asp-action="Delete" asp-controller="Room" asp-route-id="@Model.Id" value="Delete room" class="btn btn-warning" />
                 </div>
             </div>
         </div>

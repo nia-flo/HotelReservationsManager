@@ -44,7 +44,7 @@
     <div class="col-md-8 mx-auto">
         @foreach (var client in Model.Clients)
         {
-            <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#bcb2b2">
+            <div class="d-flex jumbotron py-1 px-1 my-3 mx-2 border border-warning">
                 <div class="col-md-9 my-auto">
                     <h3>@client.FirstName @client.LastName</h3>
                 </div>
@@ -61,8 +61,7 @@
     <hr />
 
     <div class="d-flex row my-3 mx-2">
-        <div class="d-flex jumbotron py-1 px-1 my-3 mx-auto" style="background-color:#bcb2b2">
-            @*<div class="d-flex jumbotron py-1 px-1 my-3 mx-auto" style="background-color:#bcb2b2">*@
+        <div class="d-flex jumbotron py-1 px-1 my-3 mx-auto border border-warning">
             <div class="col-md-9">
                 @if (Model.Room.Type == RoomType.TwoBeds)
                 {
@@ -107,7 +106,7 @@
         <hr />
 
         <div class="col-md-8 mx-auto">
-            <div class="d-flex jumbotron py-1 px-1 my-3 mx-2 mx-auto" style="background-color:#bcb2b2">
+            <div class="d-flex jumbotron py-1 px-1 my-3 mx-2 mx-auto border border-warning">
                 <div class="col-md-9 my-auto">
                     <h3>@Model.Creator.FirstName @Model.Creator.LastName</h3>
                 </div>

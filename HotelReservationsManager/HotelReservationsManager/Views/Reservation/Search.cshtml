@@ -25,7 +25,7 @@
                 <div class="d-flex">
                     <div class="align-self-center mx-auto">
                         <div class="form-group col-md-1">
-                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <input type="submit" value="Submit" class="btn btn-warning" />
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
 
     @foreach (var reservation in Model.Reservations)
     {
-        <div class="d-flex jumbotron px-1 py-1 row my-3 mx-2" style="background-color:#bcb2b2">
+        <div class="d-flex jumbotron px-1 py-1 row my-3 mx-2 border border-warning">
             <div class="col-md-10">
                 @if (reservation.RoomType == RoomType.TwoBeds)
                 {
@@ -56,12 +56,12 @@
 
                 <a class="text-muted">
                     <b>Stay:</b> @reservation.CheckInDate.ToShortDateString() - @reservation.CheckOutDate.ToShortDateString()
-                    &nbsp;
+                    <br />
                     <b>Price:</b> @reservation.Price
                 </a>
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-1 my-auto">
                 <a asp-action="Details" asp-route-id="@reservation.Id" class="mb-3 btn btn-warning my-3">Details</a>
             </div>
         </div>

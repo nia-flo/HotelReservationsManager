@@ -44,7 +44,7 @@
         {
             @if (employee.IsActive)
             {
-                <div class="d-flex jumbotron py-1 px-1 my-3 mx-2" style="background-color:#b3ffb3">
+                <div class="d-flex jumbotron py-1 px-1 my-3 mx-2 border border-success">
                     <div class="col-md-8">
                         <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
 
@@ -55,18 +55,18 @@
                         </a>
                     </div>
 
-                    <div class="col-md-2">
-                        <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    <div class="col-md-2 my-auto">
+                        <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-success my-3">Details</a>
                     </div>
 
-                    <div class="col-md-2">
-                        <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Dismiss</a>
+                    <div class="col-md-2 my-auto">
+                        <a asp-action="Dismiss" asp-route-id="@employee.Id" class="mb-3 btn btn-success my-3">Dismiss</a>
                     </div>
                 </div>
             }
             else
             {
-                <div class="d-flex jumbotron py-0 px-0 row my-3 mx-2" style="background-color:#ffb3b3">
+                <div class="d-flex jumbotron py-0 px-0 row my-3 mx-2 border border-danger">
                     <div class="col-md-8">
                         <h3>@employee.FirstName @employee.MiddleName @employee.LastName</h3>
 
@@ -77,12 +77,12 @@
                         </a>
                     </div>
 
-                    <div class="col-md-2">
-                        <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Details</a>
+                    <div class="col-md-2 my-auto">
+                        <a asp-action="Details" asp-route-id="@employee.Id" class="mb-3 btn btn-danger my-3">Details</a>
                     </div>
 
-                    <div class="col-md-2">
-                        <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-warning my-3">Hire</a>
+                    <div class="col-md-2 my-auto">
+                        <a asp-action="Hire" asp-route-id="@employee.Id" class="mb-3 btn btn-danger my-3">Hire</a>
                     </div>
                 </div>
             }

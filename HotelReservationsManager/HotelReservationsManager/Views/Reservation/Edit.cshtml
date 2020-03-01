@@ -82,22 +82,13 @@
         </select>
         <span asp-validation-for="ChoosenRoom" class="text-danger"></span>
 
-        @*<div class="d-flex">
-                <div class="align-self-center mx-auto">
-                    <div class="form-group">
-                        <input type="submit" value="Save changes" class="btn btn-primary" />
-                    </div>
-                </div>
-            </div>*@
-
         <div class="row justify-content-around">
             <div class="form-group col">
-                <input type="submit" value="Save changes" class="btn btn-primary my-auto" />
+                <input type="submit" value="Save changes" class="btn btn-warning my-auto" />
             </div>
 
             <div class="col">
-                <input type="submit" asp-action="Delete" asp-controller="Reservation" asp-route-id="@Model.Id" value="Delete reservation" class="btn btn-primary my-auto" />
-                @*<a asp-action="Delete" asp-controller="Client" asp-route-id="@Model.Id" class="mb-3 btn btn-warning my-3">Delete</a>*@
+                <input type="submit" asp-action="Delete" asp-controller="Reservation" asp-route-id="@Model.Id" value="Delete reservation" class="btn btn-primary btn-warning" />
             </div>
         </div>
     </form>

@@ -30,7 +30,7 @@
 
     @foreach (var reservation in Model.Reservations)
     {
-        <div class="d-flex jumbotron px-1 py-1 row my-3 mx-2" style="background-color:#bcb2b2">
+        <div class="d-flex jumbotron px-1 py-1 row my-3 mx-2 border border-warning">
             <div class="col-md-10">
                 @if (reservation.RoomType == RoomType.TwoBeds)
                 {
