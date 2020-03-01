@@ -35,5 +35,19 @@ namespace HotelReservationsManager.Models.ReservationViewModels
         [Required]
         [Display(Name = "Room")]
         public string ChoosenRoom { get; set; }
+
+        public ReservationCreateViewModel()
+        {
+                
+        }
+
+        public ReservationCreateViewModel(DateTime checkInDate, DateTime checkOutDate, List<ClientViewModel> clients, List<RoomViewModel> rooms)
+        {
+            CheckInDate = checkInDate;
+            CheckOutDate = checkOutDate;
+            ChoosenClients = new List<string>();
+            Clients = clients;
+            Rooms = rooms;
+        }
     }
 }

@@ -123,27 +123,21 @@ namespace HotelReservationsManager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ReservationCreateViewModel model = new ReservationCreateViewModel()
-            {
-                CheckInDate = DateTime.Now,
-                CheckOutDate = DateTime.Now,
-                ChoosenClients = new List<string>(),
-                Clients = context.Clients.Select(c => new ClientViewModel()
-                {
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Id = c.Id,
-                    IsAdult = c.IsAdult
-                }).ToList(),
-                Rooms = context.Rooms.Select(r => new RoomViewModel()
-                {
-                    Id = r.Id,
-                    Capacity = r.Capacity,
-                    Type = r.Type,
-                    Number = r.Number
 
-                }).ToList()
-            };
+            List<ClientViewModel> clients = context.Clients.Select(c => new ClientViewModel(c.Id, c.FirstName,
+                c.LastName, c.IsAdult))
+                .ToList()
+                .OrderBy(c => c.FirstName)
+                .ThenBy(c => c.LastName)
+                .ToList();
+
+            List<RoomViewModel> rooms = context.Rooms.Select(r => new RoomViewModel(r.Id, r.Capacity, r.Type,
+                r.IsFree, r.Number))
+                .ToList()
+                .OrderBy(r => r.Number)
+                .ToList();
+
+            ReservationCreateViewModel model = new ReservationCreateViewModel(DateTime.Now, DateTime.Now, clients, rooms);
 
             return View(model);
         }
@@ -258,6 +252,8 @@ namespace HotelReservationsManager.Controllers
             List<ClientViewModel> clients = reservation.ClientReservations
                 .Select(cr => new ClientViewModel(cr.Client.Id, cr.Client.FirstName,
                     cr.Client.LastName, cr.Client.IsAdult))
+                .OrderBy(c => c.FirstName)
+                .ThenBy(c => c.LastName)
                 .ToList();
 
 
@@ -268,20 +264,6 @@ namespace HotelReservationsManager.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public IActionResult Search()
-        //{
-        //    List<ReservationViewModel> reservations = context.Reservations
-        //        .Select(r => new ReservationViewModel(r.Id, r.Room.Number, r.Room.Type, r.CheckInDate,
-        //            r.CheckOutDate, r.Price))
-        //        .ToList();
-
-        //    ReservationSearchViewModel model = new ReservationSearchViewModel(reservations);
-
-        //    return View(model);
-        //}
-
-        //[HttpPost]
         public IActionResult Search(ReservationSearchViewModel model)
         {
             if (model.SearchBy == "RoomType")
@@ -327,10 +309,17 @@ namespace HotelReservationsManager.Controllers
             List<string> choosenClients = reservation.ClientReservations.Select(cr => cr.Client.Id).ToList();
 
             List<ClientViewModel> clients = context.Clients.Select(c => new ClientViewModel(c.Id, c.FirstName,
-                c.LastName, c.IsAdult)).ToList();
+                c.LastName, c.IsAdult))
+                .ToList()
+                .OrderBy(c => c.FirstName)
+                .ThenBy(c => c.LastName)
+                .ToList();
 
             List<RoomViewModel> rooms = context.Rooms.Select(r => new RoomViewModel(r.Id, r.Capacity, r.Type,
-                r.IsFree, r.Number)).ToList();
+                r.IsFree, r.Number))
+                .ToList()
+                .OrderBy(r => r.Number)
+                .ToList();
 
             ReservationEditViewModel model = new ReservationEditViewModel(id, reservation.CheckInDate,
                 reservation.CheckOutDate, reservation.IsBreakfastIncluded, reservation.IsAllInclusive,
