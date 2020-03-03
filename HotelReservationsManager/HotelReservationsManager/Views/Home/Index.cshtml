@@ -1,15 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["Background"] = "images/voyage_sorgun_beach.jpg";
 }
 
-    <div class="text-center">
-        @if (this.User.Identity.IsAuthenticated)
-        {
-            <h1 class="display-4 mt-5">Welcome</h1>
-            <h2 class="display-7">in Hotel Reservations Manager</h2>
-        }
-        else
-        {
-            <h1 class="display-4 mt-5">Login to continue</h1>
-        }
-    </div>
